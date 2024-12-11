@@ -75,7 +75,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="hms-mirdif-hospital-logo.png" alt="hms-mirdif-hospital-logo" class="logo">
+        <img src="hms-mirdif-hospital-logo.png" alt="HMS Mirdif Hospital Logo" class="logo">
         <h1>Patient Triage Form</h1>
         <form id="triage-form" onsubmit="handleSubmit(event)">
             <!-- Personal Details -->
@@ -229,7 +229,7 @@ document.getElementById('chief-complaint').addEventListener('change', function (
         });
         function toggleExplanation(group, explanationId) {
             const explanationBox = document.getElementById(explanationId);
-            const isYesSelected = document.querySelector(input[name="${group}"]:checked)?.value === 'Yes';
+            const isYesSelected = document.querySelector(`input[name="${group}"]:checked`)?.value === 'Yes';
             explanationBox.classList.toggle('hidden', !isYesSelected);
             if (!isYesSelected) {
                 explanationBox.value = '';
@@ -251,10 +251,10 @@ document.getElementById('chief-complaint').addEventListener('change', function (
                 const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
 
                 if (weeksPregnant) {
-                    complaintText += , ${weeksPregnant} weeks;
+                    complaintText += `, ${weeksPregnant} weeks`;
                 }
                 if (doctorName) {
-                    complaintText += , Dr. ${doctorName};
+                    complaintText += `, Dr. ${doctorName}`;
                 }
 
                 document.getElementById('doctor-name').value = '';
@@ -285,7 +285,7 @@ document.getElementById('chief-complaint').addEventListener('change', function (
         }
 function generateUniqueCode() {
     const randomPart = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit random number
-    return MPHT-${randomPart};
+    return `MPHT-${randomPart}`;
 }
 
 function handleSubmit(event) {
