@@ -94,18 +94,21 @@
                 font-size: 12px;
             }
         }
-        #complaint-list {
-    display: block;
-    margin-top: 10px;
+        complaint-list {
     border: 1px solid #dcdcdc;
     border-radius: 5px;
     background-color: #ffffff;
-    color: #2c3e50;
+    padding: 10px;
+    min-height: 50px;
     font-size: 14px;
+    color: #2c3e50;
+    overflow-y: auto; /* Add scroll if items exceed container height */
+    max-height: 150px; /* Limit height */
+}
+.complaint-item {
+    margin-bottom: 5px;
     padding: 5px;
-    box-sizing: border-box;
-    min-height: 50px; /* Ensure a minimum height */
-    overflow-y: auto; /* Add scroll for large lists */
+    border-bottom: 1px dashed #ccc; /* Separator for readability */
 }
     </style>
 </head>
@@ -161,7 +164,7 @@
             <button type="button" onclick="removeComplaint()">Remove Selected Complaint</button>
             <label for="complaint-list">Complaints List</label>
             <select id="complaint-list" name="complaints" multiple>
-            <select id="complaint-list" name="complaints" multiple style="height: 150px;"></select>
+            <div id="complaint-list" class="complaint-list"></div>
             <textarea id="complaint-notes" name="complaintNotes" placeholder="Write additional details about the complaints..."></textarea>
                 
             <!-- Pain Assessment -->
@@ -375,13 +378,12 @@ function detectAndAdjustForIOS() {
     newComplaint.textContent = complaintText;
     complaintList.appendChild(newComplaint);
 
-    // Ensure visibility of the list and scroll into view
-    complaintList.style.display = 'block';
-    complaintList.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    document.getElementById('chief-complaint').value = '';
-}
-
+    // Add the complaint as a visible text item
+    const listItem = document.createElement('div');
+    listItem.textContent = complaintText;
+    listItem.classList.add('complaint-item'); // Optional styling class
+    complaintList.appendChild(listItem);
+     
 function removeComplaint() {
     const complaintList = document.getElementById('complaint-list');
     if (complaintList.selectedIndex === -1) {
