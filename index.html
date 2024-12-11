@@ -295,7 +295,10 @@ document.getElementById('chief-complaint').addEventListener('change', function (
 
             document.getElementById('chief-complaint').value = '';
         }
-
+        
+// Ensure visibility of the list and scroll into view
+    complaintList.style.display = 'block';
+    complaintList.scrollIntoView({ behavior: 'smooth', block: 'center' });
         function removeComplaint() {
             const complaintList = document.getElementById('complaint-list');
             if (complaintList.selectedIndex === -1) {
