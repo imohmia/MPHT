@@ -147,9 +147,10 @@
             <button type="button" onclick="addComplaint()">Add Complaint</button>
             <button type="button" onclick="removeComplaint()">Remove Selected Complaint</button>
             <label for="complaint-list">Complaints List</label>
+            <select id="complaint-list" name="complaints" multiple>
             <select id="complaint-list" name="complaints" multiple style="height: 150px;"></select>
             <textarea id="complaint-notes" name="complaintNotes" placeholder="Write additional details about the complaints..."></textarea>
-
+                
             <!-- Pain Assessment -->
             <label for="pain-score">Pain Assessment</label>
             <select id="pain-score" name="painScore">
