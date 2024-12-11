@@ -12,30 +12,28 @@
             padding: 0;
         }
         .container {
-            max-width: 600px;
-            margin: 10px auto;
+            max-width: 800px;
+            margin: 20px auto;
             background: #ffffff;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .logo {
             display: block;
-            margin: 10px auto;
-            max-width: 120px;
+            margin: 20px auto;
+            max-width: 150px;
             height: auto;
         }
         h1 {
             text-align: center;
             color: #2c3e50;
-            font-size: 22px;
         }
         label {
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: bold;
             color: #34495e;
-            font-size: 14px;
         }
         input, textarea, select, button {
             width: 100%;
@@ -44,11 +42,10 @@
             border: 1px solid #dcdcdc;
             border-radius: 5px;
             font-size: 14px;
-            box-sizing: border-box;
         }
         input[type="radio"] {
             width: auto;
-            margin-right: 5px;
+            margin-right: 10px;
         }
         button {
             background-color: #3498db;
@@ -68,45 +65,12 @@
         .question-group {
             display: flex;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 15px;
         }
         .question-group label {
-            margin-right: 10px;
+            margin-right: 20px;
             flex: 1;
-            font-size: 12px;
         }
-
-        @media (max-width: 600px) {
-            .container {
-                margin: 10px;
-                padding: 10px;
-            }
-
-            .logo {
-                max-width: 100px;
-            }
-
-            h1 {
-                font-size: 18px;
-            }
-
-            label {
-                font-size: 12px;
-            }
-        }
-        #complaint-list {
-    display: block;
-    margin-top: 10px;
-    border: 1px solid #dcdcdc;
-    border-radius: 5px;
-    background-color: #ffffff;
-    color: #2c3e50;
-    font-size: 14px;
-    padding: 5px;
-    box-sizing: border-box;
-    min-height: 50px; /* Ensure a minimum height */
-    overflow-y: auto; /* Add scroll for large lists */
-}
     </style>
 </head>
 <body>
@@ -114,12 +78,14 @@
         <img src="hms-mirdif-hospital-logo.png" alt="hms-mirdif-hospital-logo" class="logo">
         <h1>Patient Triage Form</h1>
         <form id="triage-form" onsubmit="handleSubmit(event)">
+            <!-- Personal Details -->
             <label for="name">Patient Name</label>
             <input type="text" id="name" name="name" placeholder="Enter patient name" required>
 
             <label for="dob">Date of Birth</label>
             <input type="date" id="dob" name="dob" required>
 
+            <!-- Chief Complaints -->
             <label for="chief-complaint">Chief Complaint</label>
             <select id="chief-complaint" name="chiefComplaint">
                 <option value="">Select an option</option>
@@ -160,10 +126,9 @@
             <button type="button" onclick="addComplaint()">Add Complaint</button>
             <button type="button" onclick="removeComplaint()">Remove Selected Complaint</button>
             <label for="complaint-list">Complaints List</label>
-            <select id="complaint-list" name="complaints" multiple>
             <select id="complaint-list" name="complaints" multiple style="height: 150px;"></select>
             <textarea id="complaint-notes" name="complaintNotes" placeholder="Write additional details about the complaints..."></textarea>
-                
+
             <!-- Pain Assessment -->
             <label for="pain-score">Pain Assessment</label>
             <select id="pain-score" name="painScore">
@@ -270,126 +235,54 @@ document.getElementById('chief-complaint').addEventListener('change', function (
                 explanationBox.value = '';
             }
         }
-        function initializeComplaintList() {
-    const complaintList = document.getElementById('complaint-list');
-
-    // Define all available complaints
-    const complaints = [
-        "Back Pain", "Body Pain (Fatigue)", "Chest Pain with Cough", "Chest Pain without Cough",
-        "Cough with Phlegm", "Diarrhea", "Dry Cough", "Ear Pains", "Eye Pains",
-        "Fever", "Headache", "Headache (Migraine)", "High Heart Beating (Palpitation)",
-        "Injection of prescribed medicine", "Leg Pain", "Nose Bleeding (Epistaxis)",
-        "Pregnancy", "Prescription of Long-Term Medicine", "Runny Nose", "Sore Throat",
-        "Stomach Pain (Abdominal Pain)", "Throwing Up (Vomiting)", "Wrist Pain",
-        "Cannot Breathe (Shortness of Breath)"
-    ];
-
-    // Populate the complaints list with all options
-    complaints.forEach(complaint => {
-        const option = document.createElement('option');
-        option.textContent = complaint;
-        complaintList.appendChild(option);
-    });
-
-    // Ensure the complaints list is visible
-    complaintList.style.display = 'block';
-    complaintList.size = complaints.length; // Show all complaints as a dropdown
-}
-
-function detectAndAdjustForIOS() {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-    if (isIOS) {
-        // Hide the Add Complaint button and Chief Complaint dropdown for iOS
-        document.getElementById('add-complaint-button').style.display = 'none';
-        document.getElementById('chief-complaint').style.display = 'none';
-
-        // Initialize the complaint list for iOS users
-        initializeComplaintList();
-    }
-}
  function addComplaint() {
-    const complaintList = document.getElementById('complaint-list');
-    const selectedComplaint = document.getElementById('chief-complaint').value;
+            const complaintList = document.getElementById('complaint-list');
+            const selectedComplaint = document.getElementById('chief-complaint').value;
 
-    // Check if the device is iOS
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (!selectedComplaint) {
+                alert("Please select a complaint to add.");
+                return;
+            }
 
-    if (isIOS) {
-        // If iOS, remove the add complaint button and show all complaints in the list
-        document.getElementById('add-complaint-button').style.display = 'none';
-        document.getElementById('chief-complaint').style.display = 'none';
+            let complaintText = selectedComplaint;
 
-        // Populate the complaints list with all options
-        const complaints = [
-            "Back Pain", "Body Pain (Fatigue)", "Chest Pain with Cough", "Chest Pain without Cough",
-            "Cough with Phlegm", "Diarrhea", "Dry Cough", "Ear Pains", "Eye Pains",
-            "Fever", "Headache", "Headache (Migraine)", "High Heart Beating (Palpitation)",
-            "Injection of prescribed medicine", "Leg Pain", "Nose Bleeding (Epistaxis)",
-            "Pregnancy", "Prescription of Long-Term Medicine", "Runny Nose", "Sore Throat",
-            "Stomach Pain (Abdominal Pain)", "Throwing Up (Vomiting)", "Wrist Pain",
-            "Cannot Breathe (Shortness of Breath)"
-        ];
+            if (selectedComplaint === 'Pregnancy') {
+                const doctorName = document.getElementById('doctor-name').value.trim();
+                const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
 
-        complaints.forEach(complaint => {
-            const option = document.createElement('option');
-            option.textContent = complaint;
-            complaintList.appendChild(option);
-        });
+                if (weeksPregnant) {
+                    complaintText += , ${weeksPregnant} weeks;
+                }
+                if (doctorName) {
+                    complaintText += , Dr. ${doctorName};
+                }
 
-        // Ensure the complaints list is visible
-        complaintList.style.display = 'block';
-        return;
-    }
+                document.getElementById('doctor-name').value = '';
+                document.getElementById('weeks-pregnant').value = '';
+                document.getElementById('pregnancy-details').classList.add('hidden');
+            }
 
-    if (!selectedComplaint) {
-        alert("Please select a complaint to add.");
-        return;
-    }
+            const existingOptions = Array.from(complaintList.options);
+            if (existingOptions.some(opt => opt.textContent === complaintText)) {
+                alert("This complaint has already been added.");
+                return;
+            }
 
-    let complaintText = selectedComplaint;
+            const newComplaint = document.createElement('option');
+            newComplaint.textContent = complaintText;
+            complaintList.appendChild(newComplaint);
 
-    if (selectedComplaint === 'Pregnancy') {
-        const doctorName = document.getElementById('doctor-name').value.trim();
-        const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
-
-        if (weeksPregnant) {
-            complaintText += , ${weeksPregnant} weeks;
-        }
-        if (doctorName) {
-            complaintText += , Dr. ${doctorName};
+            document.getElementById('chief-complaint').value = '';
         }
 
-        document.getElementById('doctor-name').value = '';
-        document.getElementById('weeks-pregnant').value = '';
-        document.getElementById('pregnancy-details').classList.add('hidden');
-    }
-
-    const existingOptions = Array.from(complaintList.options);
-    if (existingOptions.some(opt => opt.textContent === complaintText)) {
-        alert("This complaint has already been added.");
-        return;
-    }
-
-    const newComplaint = document.createElement('option');
-    newComplaint.textContent = complaintText;
-    complaintList.appendChild(newComplaint);
-
-    // Ensure visibility of the list and scroll into view
-    complaintList.style.display = 'block';
-    complaintList.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    document.getElementById('chief-complaint').value = '';
-}
-
-function removeComplaint() {
-    const complaintList = document.getElementById('complaint-list');
-    if (complaintList.selectedIndex === -1) {
-        alert("Please select a complaint to remove.");
-        return;
-    }
-    complaintList.remove(complaintList.selectedIndex);
-}
+        function removeComplaint() {
+            const complaintList = document.getElementById('complaint-list');
+            if (complaintList.selectedIndex === -1) {
+                alert("Please select a complaint to remove.");
+                return;
+            }
+            complaintList.remove(complaintList.selectedIndex);
+        }
 function generateUniqueCode() {
     const randomPart = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit random number
     return MPHT-${randomPart};
