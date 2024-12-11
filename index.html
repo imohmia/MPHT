@@ -312,6 +312,11 @@ document.getElementById('chief-complaint').addEventListener('change', function (
             }
             complaintList.remove(complaintList.selectedIndex);
         }
+        
+        // If device is iOS, adjust the complaints list to always be a visible box
+        if (isIOS) {
+            document.getElementById('complaint-list').style.border = '1px solid #ccc';
+        }
 function generateUniqueCode() {
     const randomPart = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit random number
     return `MPHT-${randomPart}`;
