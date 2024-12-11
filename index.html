@@ -94,21 +94,18 @@
                 font-size: 12px;
             }
         }
-        complaint-list {
+        #complaint-list {
+    display: block;
+    margin-top: 10px;
     border: 1px solid #dcdcdc;
     border-radius: 5px;
     background-color: #ffffff;
-    padding: 10px;
-    min-height: 50px;
-    font-size: 14px;
     color: #2c3e50;
-    overflow-y: auto; /* Add scroll if items exceed container height */
-    max-height: 150px; /* Limit height */
-}
-.complaint-item {
-    margin-bottom: 5px;
+    font-size: 14px;
     padding: 5px;
-    border-bottom: 1px dashed #ccc; /* Separator for readability */
+    box-sizing: border-box;
+    min-height: 50px; /* Ensure a minimum height */
+    overflow-y: auto; /* Add scroll for large lists */
 }
     </style>
 </head>
@@ -163,7 +160,8 @@
             <button type="button" onclick="addComplaint()">Add Complaint</button>
             <button type="button" onclick="removeComplaint()">Remove Selected Complaint</button>
             <label for="complaint-list">Complaints List</label>
-            <div id="complaint-list" class="complaint-list"></div>
+            <select id="complaint-list" name="complaints" multiple>
+            <select id="complaint-list" name="complaints" multiple style="height: 150px;"></select>
             <textarea id="complaint-notes" name="complaintNotes" placeholder="Write additional details about the complaints..."></textarea>
                 
             <!-- Pain Assessment -->
@@ -312,8 +310,37 @@ function detectAndAdjustForIOS() {
 }
  function addComplaint() {
     const complaintList = document.getElementById('complaint-list');
-    const chiefComplaintDropdown = document.getElementById('chief-complaint');
-    const selectedComplaint = chiefComplaintDropdown.value;
+    const selectedComplaint = document.getElementById('chief-complaint').value;
+
+    // Check if the device is iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isIOS) {
+        // If iOS, remove the add complaint button and show all complaints in the list
+        document.getElementById('add-complaint-button').style.display = 'none';
+        document.getElementById('chief-complaint').style.display = 'none';
+
+        // Populate the complaints list with all options
+        const complaints = [
+            "Back Pain", "Body Pain (Fatigue)", "Chest Pain with Cough", "Chest Pain without Cough",
+            "Cough with Phlegm", "Diarrhea", "Dry Cough", "Ear Pains", "Eye Pains",
+            "Fever", "Headache", "Headache (Migraine)", "High Heart Beating (Palpitation)",
+            "Injection of prescribed medicine", "Leg Pain", "Nose Bleeding (Epistaxis)",
+            "Pregnancy", "Prescription of Long-Term Medicine", "Runny Nose", "Sore Throat",
+            "Stomach Pain (Abdominal Pain)", "Throwing Up (Vomiting)", "Wrist Pain",
+            "Cannot Breathe (Shortness of Breath)"
+        ];
+
+        complaints.forEach(complaint => {
+            const option = document.createElement('option');
+            option.textContent = complaint;
+            complaintList.appendChild(option);
+        });
+
+        // Ensure the complaints list is visible
+        complaintList.style.display = 'block';
+        return;
+    }
 
     if (!selectedComplaint) {
         alert("Please select a complaint to add.");
@@ -322,16 +349,15 @@ function detectAndAdjustForIOS() {
 
     let complaintText = selectedComplaint;
 
-    // Handle Pregnancy Details
     if (selectedComplaint === 'Pregnancy') {
         const doctorName = document.getElementById('doctor-name').value.trim();
         const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
 
         if (weeksPregnant) {
-            complaintText += `, ${weeksPregnant} weeks`;
+            complaintText += , ${weeksPregnant} weeks;
         }
         if (doctorName) {
-            complaintText += `, Dr. ${doctorName}`;
+            complaintText += , Dr. ${doctorName};
         }
 
         document.getElementById('doctor-name').value = '';
@@ -339,50 +365,31 @@ function detectAndAdjustForIOS() {
         document.getElementById('pregnancy-details').classList.add('hidden');
     }
 
-    // Check for duplicates
-    const existingItems = Array.from(complaintList.children);
-    if (existingItems.some(item => item.textContent === complaintText)) {
+    const existingOptions = Array.from(complaintList.options);
+    if (existingOptions.some(opt => opt.textContent === complaintText)) {
         alert("This complaint has already been added.");
         return;
     }
 
-    // Add to list
-    const listItem = document.createElement('div');
-    listItem.textContent = complaintText;
-    listItem.classList.add('complaint-item');
-    complaintList.appendChild(listItem);
+    const newComplaint = document.createElement('option');
+    newComplaint.textContent = complaintText;
+    complaintList.appendChild(newComplaint);
 
-    // Remove from dropdown
-    Array.from(chiefComplaintDropdown.options).forEach(option => {
-        if (option.value === selectedComplaint) {
-            chiefComplaintDropdown.removeChild(option);
-        }
-    });
+    // Ensure visibility of the list and scroll into view
+    complaintList.style.display = 'block';
+    complaintList.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-    // Reset dropdown
-    chiefComplaintDropdown.value = '';
+    document.getElementById('chief-complaint').value = '';
 }
 
 function removeComplaint() {
     const complaintList = document.getElementById('complaint-list');
-    if (complaintList.children.length === 0) {
-        alert("No complaints to remove.");
+    if (complaintList.selectedIndex === -1) {
+        alert("Please select a complaint to remove.");
         return;
     }
-
-    complaintList.removeChild(complaintList.lastChild);
+    complaintList.remove(complaintList.selectedIndex);
 }
-
-document.getElementById('chief-complaint').addEventListener('change', function () {
-    const pregnancyDetails = document.getElementById('pregnancy-details');
-    if (this.value === 'Pregnancy') {
-        pregnancyDetails.classList.remove('hidden');
-    } else {
-        pregnancyDetails.classList.add('hidden');
-        document.getElementById('doctor-name').value = '';
-        document.getElementById('weeks-pregnant').value = '';
-    }
-});
 function generateUniqueCode() {
     const randomPart = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit random number
     return MPHT-${randomPart};
