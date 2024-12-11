@@ -238,6 +238,7 @@
 </div>
 
     <script>
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 document.getElementById('chief-complaint').addEventListener('change', function () {
             const pregnancyDetails = document.getElementById('pregnancy-details');
             if (this.value === 'Pregnancy') {
@@ -247,6 +248,7 @@ document.getElementById('chief-complaint').addEventListener('change', function (
                 document.getElementById('doctor-name').value = '';
                 document.getElementById('weeks-pregnant').value = '';
             }
+    
         });
         function toggleExplanation(group, explanationId) {
             const explanationBox = document.getElementById(explanationId);
@@ -264,7 +266,12 @@ document.getElementById('chief-complaint').addEventListener('change', function (
                 alert("Please select a complaint to add.");
                 return;
             }
-
+ // Add complaint as a visible item in the list
+            const complaintItem = document.createElement('div');
+            complaintItem.textContent = selectedComplaint;
+            complaintItem.classList.add('complaint-item');
+            complaintList.appendChild(complaintItem);
+     
             let complaintText = selectedComplaint;
 
             if (selectedComplaint === 'Pregnancy') {
@@ -295,6 +302,7 @@ document.getElementById('chief-complaint').addEventListener('change', function (
 
             document.getElementById('chief-complaint').value = '';
         }
+        
 
         function removeComplaint() {
             const complaintList = document.getElementById('complaint-list');
