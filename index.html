@@ -65,23 +65,17 @@
         .hidden {
             display: none;
         }
-        .complaint-list {
+        .question-group {
+            display: flex;
+            align-items: center;
             margin-top: 10px;
-            border: 1px solid #dcdcdc;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #ffffff;
-            font-size: 14px;
-            color: #2c3e50;
-            min-height: 50px;
         }
-        .complaint-item {
-            padding: 5px 0;
-            border-bottom: 1px dashed #dcdcdc;
+        .question-group label {
+            margin-right: 10px;
+            flex: 1;
+            font-size: 12px;
         }
-        .complaint-item:last-child {
-            border-bottom: none;
-        }
+
         @media (max-width: 600px) {
             .container {
                 margin: 10px;
@@ -141,20 +135,22 @@
                 <option value="Wrist Pain">Wrist Pain</option>
                 <option value="Cannot Breathe (Shortness of Breath)">Cannot Breathe (Shortness of Breath)</option>
             </select>
-  <!-- Pregnancy Details -->
+            
+            <!-- Pregnancy Details -->
             <div id="pregnancy-details" class="hidden">
                 <label for="doctor-name">Doctor's Name (if following up):</label>
                 <input type="text" id="doctor-name" name="doctorName" placeholder="Enter doctor's name">
                 <label for="weeks-pregnant">Number of Weeks Pregnant:</label>
                 <input type="number" id="weeks-pregnant" name="weeksPregnant" min="0" placeholder="Enter weeks">
             </div>
-            
-              <button type="button" onclick="addComplaint()">Add Complaint</button>
+
+            <button type="button" onclick="addComplaint()">Add Complaint</button>
             <button type="button" onclick="removeComplaint()">Remove Selected Complaint</button>
-            <label>Complaints List</label>
-            <div id="complaint-list" class="complaint-list"></div>
+            <label for="complaint-list">Complaints List</label>
+            <select id="complaint-list" name="complaints" multiple style="height: 150px;"></select>
             <textarea id="complaint-notes" name="complaintNotes" placeholder="Write additional details about the complaints..."></textarea>
- <!-- Pain Assessment -->
+
+            <!-- Pain Assessment -->
             <label for="pain-score">Pain Assessment</label>
             <select id="pain-score" name="painScore">
                 <option value="0">😊 No Pain (0)</option>
@@ -214,12 +210,14 @@
             <label for="travel-history-no">No</label>
         </div>
         <textarea id="travel-explanation" class="hidden" placeholder="Please explain..." name="travelHistoryExplanation"></textarea>
-            <label for="notes">Additional Notes</label>
-            <textarea id="notes" name="additionalNotes" placeholder="Enter any additional information..."></textarea>
 
-            <button type="submit">Submit</button>
-        </form>
-    </div>
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes" name="additionalNotes" placeholder="Enter any additional information..."></textarea>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit</button>
+    </form>
+
 <div id="submission-message" style="
     display: none; 
     margin-top: 20px; 
@@ -238,8 +236,9 @@
         </span>
     </p>
 </div>
+
     <script>
-        document.getElementById('chief-complaint').addEventListener('change', function () {
+document.getElementById('chief-complaint').addEventListener('change', function () {
             const pregnancyDetails = document.getElementById('pregnancy-details');
             if (this.value === 'Pregnancy') {
                 pregnancyDetails.classList.remove('hidden');
@@ -257,16 +256,47 @@
                 explanationBox.value = '';
             }
         }
-        function addComplaint() {
+ function addComplaint() {
             const complaintList = document.getElementById('complaint-list');
-            const chiefComplaintDropdown = document.getElementById('chief-complaint');
-            const selectedComplaint = chiefComplaintDropdown.value;
+            const selectedComplaint = document.getElementById('chief-complaint').value;
 
             if (!selectedComplaint) {
                 alert("Please select a complaint to add.");
                 return;
             }
-function removeComplaint() {
+
+            let complaintText = selectedComplaint;
+
+            if (selectedComplaint === 'Pregnancy') {
+                const doctorName = document.getElementById('doctor-name').value.trim();
+                const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
+
+                if (weeksPregnant) {
+                    complaintText += , ${weeksPregnant} weeks;
+                }
+                if (doctorName) {
+                    complaintText += , Dr. ${doctorName};
+                }
+
+                document.getElementById('doctor-name').value = '';
+                document.getElementById('weeks-pregnant').value = '';
+                document.getElementById('pregnancy-details').classList.add('hidden');
+            }
+
+            const existingOptions = Array.from(complaintList.options);
+            if (existingOptions.some(opt => opt.textContent === complaintText)) {
+                alert("This complaint has already been added.");
+                return;
+            }
+
+            const newComplaint = document.createElement('option');
+            newComplaint.textContent = complaintText;
+            complaintList.appendChild(newComplaint);
+
+            document.getElementById('chief-complaint').value = '';
+        }
+
+        function removeComplaint() {
             const complaintList = document.getElementById('complaint-list');
             if (complaintList.selectedIndex === -1) {
                 alert("Please select a complaint to remove.");
@@ -274,30 +304,17 @@ function removeComplaint() {
             }
             complaintList.remove(complaintList.selectedIndex);
         }
-            // Add complaint as a visible item in the list
-            const complaintItem = document.createElement('div');
-            complaintItem.textContent = selectedComplaint;
-            complaintItem.classList.add('complaint-item');
-            complaintList.appendChild(complaintItem);
-
-            // Remove the selected option from the dropdown
-            Array.from(chiefComplaintDropdown.options).forEach(option => {
-                if (option.value === selectedComplaint) {
-                    option.remove();
-                }
-            });
-
-            // Reset dropdown
-            chiefComplaintDropdown.value = '';
-        }
 function generateUniqueCode() {
     const randomPart = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit random number
     return MPHT-${randomPart};
 }
-        function handleSubmit(event) {
-            event.preventDefault();
-const uniqueCode = generateUniqueCode();
-         const formData = {
+
+function handleSubmit(event) {
+    event.preventDefault();
+
+    const uniqueCode = generateUniqueCode();
+
+    const formData = {
         name: document.getElementById('name').value || '',
         dob: document.getElementById('dob').value || '',
         complaints: Array.from(document.getElementById('complaint-list').options).map(opt => opt.textContent) || [],
@@ -349,6 +366,6 @@ const uniqueCode = generateUniqueCode();
             console.error('Error submitting the form:', error);
             alert('An error occurred while submitting the form. Please try again later.');
         });
-    </script>
+}    </script>
 </body>
 </html>
