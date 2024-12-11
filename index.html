@@ -12,30 +12,28 @@
             padding: 0;
         }
         .container {
-            max-width: 600px;
-            margin: 10px auto;
+            max-width: 800px;
+            margin: 20px auto;
             background: #ffffff;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .logo {
             display: block;
-            margin: 10px auto;
-            max-width: 120px;
+            margin: 20px auto;
+            max-width: 150px;
             height: auto;
         }
         h1 {
             text-align: center;
             color: #2c3e50;
-            font-size: 22px;
         }
         label {
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: bold;
             color: #34495e;
-            font-size: 14px;
         }
         input, textarea, select, button {
             width: 100%;
@@ -44,11 +42,10 @@
             border: 1px solid #dcdcdc;
             border-radius: 5px;
             font-size: 14px;
-            box-sizing: border-box;
         }
         input[type="radio"] {
             width: auto;
-            margin-right: 5px;
+            margin-right: 10px;
         }
         button {
             background-color: #3498db;
@@ -65,54 +62,79 @@
         .hidden {
             display: none;
         }
-        .complaint-list {
-            margin-top: 10px;
-            border: 1px solid #dcdcdc;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #ffffff;
-            font-size: 14px;
-            color: #2c3e50;
-            min-height: 50px;
+        .question-group {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
         }
-        .complaint-item {
-            padding: 5px 0;
-            border-bottom: 1px dashed #dcdcdc;
+        .question-group label {
+            margin-right: 20px;
+            flex: 1;
         }
-        .complaint-item:last-child {
-            border-bottom: none;
-        }
-        @media (max-width: 600px) {
-            .container {
-                margin: 10px;
-                padding: 10px;
-            }
+.question-group {
+    margin-top: 15px;
+}
 
-            .logo {
-                max-width: 100px;
-            }
+.question-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #34495e;
+}
 
-            h1 {
-                font-size: 18px;
-            }
+.question-group input[type="radio"] {
+    display: inline-block;
+    margin-right: 5px;
+}
 
-            label {
-                font-size: 12px;
-            }
-        }
+.question-group label[for] {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 14px;
+    color: #34495e;
+}
+
+textarea {
+    display: block;
+    margin-top: 5px;
+}
+@media (max-width: 600px) {
+    .question-group label {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .question-group input[type="radio"] {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .question-group label[for] {
+        display: inline-block;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+
+    textarea {
+        font-size: 12px;
+    }
+}
+
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="hms-mirdif-hospital-logo.png" alt="hms-mirdif-hospital-logo" class="logo">
+        <img src="hms-mirdif-hospital-logo.png" alt="HMS Mirdif Hospital Logo" class="logo">
         <h1>Patient Triage Form</h1>
         <form id="triage-form" onsubmit="handleSubmit(event)">
+            <!-- Personal Details -->
             <label for="name">Patient Name</label>
             <input type="text" id="name" name="name" placeholder="Enter patient name" required>
 
             <label for="dob">Date of Birth</label>
             <input type="date" id="dob" name="dob" required>
 
+            <!-- Chief Complaints -->
             <label for="chief-complaint">Chief Complaint</label>
             <select id="chief-complaint" name="chiefComplaint">
                 <option value="">Select an option</option>
@@ -141,7 +163,7 @@
                 <option value="Wrist Pain">Wrist Pain</option>
                 <option value="Cannot Breathe (Shortness of Breath)">Cannot Breathe (Shortness of Breath)</option>
             </select>
-            
+
             <!-- Pregnancy Details -->
             <div id="pregnancy-details" class="hidden">
                 <label for="doctor-name">Doctor's Name (if following up):</label>
