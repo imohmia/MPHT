@@ -274,6 +274,36 @@ document.getElementById('chief-complaint').addEventListener('change', function (
     const complaintList = document.getElementById('complaint-list');
     const selectedComplaint = document.getElementById('chief-complaint').value;
 
+    // Check if the device is iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isIOS) {
+        // If iOS, remove the add complaint button and show all complaints in the list
+        document.getElementById('add-complaint-button').style.display = 'none';
+        document.getElementById('chief-complaint').style.display = 'none';
+
+        // Populate the complaints list with all options
+        const complaints = [
+            "Back Pain", "Body Pain (Fatigue)", "Chest Pain with Cough", "Chest Pain without Cough",
+            "Cough with Phlegm", "Diarrhea", "Dry Cough", "Ear Pains", "Eye Pains",
+            "Fever", "Headache", "Headache (Migraine)", "High Heart Beating (Palpitation)",
+            "Injection of prescribed medicine", "Leg Pain", "Nose Bleeding (Epistaxis)",
+            "Pregnancy", "Prescription of Long-Term Medicine", "Runny Nose", "Sore Throat",
+            "Stomach Pain (Abdominal Pain)", "Throwing Up (Vomiting)", "Wrist Pain",
+            "Cannot Breathe (Shortness of Breath)"
+        ];
+
+        complaints.forEach(complaint => {
+            const option = document.createElement('option');
+            option.textContent = complaint;
+            complaintList.appendChild(option);
+        });
+
+        // Ensure the complaints list is visible
+        complaintList.style.display = 'block';
+        return;
+    }
+
     if (!selectedComplaint) {
         alert("Please select a complaint to add.");
         return;
