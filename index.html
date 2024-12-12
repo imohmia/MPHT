@@ -130,12 +130,11 @@ textarea {
     button {
         padding: 12px;
         font-size: 14px;
-   #complaint-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 5px;
-    border-bottom: 1px solid #dcdcdc;
+   /* Complaint List Styling */
+#complaint-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 #complaint-list li {
@@ -146,32 +145,34 @@ textarea {
     border-bottom: 1px solid #dcdcdc;
 }
 
-#complaint-list li span {
+#complaint-list li:last-child {
+    border-bottom: none;
+}
+
+#complaint-list .complaint-text {
     flex: 1;
     text-align: left;
     color: #34495e;
     font-size: 16px;
 }
 
-#complaint-list li button {
+#complaint-list .remove-button {
     background: none;
     border: none;
     color: #e74c3c;
+    font-size: 14px;
     cursor: pointer;
-    font-size: 20px; /* Icon size */
-    line-height: 20px;
-    transition: transform 0.2s, color 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0; /* Remove padding for compact look */
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s, color 0.2s;
 }
 
-#complaint-list li button:hover {
+#complaint-list .remove-button:hover {
+    background-color: #f8d7da;
     color: #c0392b;
-    transform: scale(1.2); /* Hover effect for the icon */
 }
 
+/* Container Styling */
 #complaint-list-container {
     border: 1px solid #dcdcdc;
     border-radius: 10px;
@@ -233,7 +234,6 @@ textarea {
             </div>
 
             <button type="button" onclick="addComplaint()">Add Complaint</button>
-            <button type="button" onclick="removeComplaint()">Remove Selected Complaint</button>
             <label for="complaint-list">Complaints List</label>
             <label for="complaint-list">Complaints List</label>
 <div id="complaint-list-container" style="border: 1px solid #dcdcdc; border-radius: 5px; padding: 10px; max-height: 150px; overflow-y: auto;">
@@ -362,7 +362,7 @@ document.getElementById('chief-complaint').addEventListener('change', function (
     const existingComplaints = Array.from(complaintList.children);
 
     // Check for duplicates
-    if (existingComplaints.some(item => item.textContent.includes(selectedComplaint))) {
+    if (existingComplaints.some(item => item.querySelector('.complaint-text').textContent === selectedComplaint)) {
         alert("This complaint is already in the list.");
         return;
     }
@@ -392,28 +392,19 @@ document.getElementById('chief-complaint').addEventListener('change', function (
 
     // Complaint text
     const complaintTextNode = document.createElement('span');
+    complaintTextNode.className = 'complaint-text';
     complaintTextNode.textContent = complaintText;
 
     // Remove button
     const removeButton = document.createElement('button');
-    removeButton.innerHTML = '🗑️'; // Fancy trash bin emoji
-    removeButton.style.cursor = 'pointer';
-    removeButton.style.border = 'none';
-    removeButton.style.backgroundColor = 'transparent';
-    removeButton.style.fontSize = '20px';
-    removeButton.style.marginLeft = '10px';
+    removeButton.textContent = 'Remove'; // Use "Remove" text for simplicity
+    removeButton.className = 'remove-button';
     removeButton.onclick = () => {
         complaintList.removeChild(newComplaint);
     };
 
     // Align text and button
-    newComplaint.style.display = 'flex';
-    newComplaint.style.justifyContent = 'space-between';
-    newComplaint.style.alignItems = 'center';
-    newComplaint.style.padding = '5px 0';
-    newComplaint.style.borderBottom = '1px solid #dcdcdc';
-
-    // Append elements
+    newComplaint.className = 'complaint-item';
     newComplaint.appendChild(complaintTextNode);
     newComplaint.appendChild(removeButton);
     complaintList.appendChild(newComplaint);
