@@ -181,6 +181,26 @@ textarea {
     max-height: 200px;
     overflow-y: auto;
 }
+.spinner {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto; /* Centered */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-message {
+    font-size: 16px;
+    color: #2c3e50;
+    margin-top: 10px;
+}
     </style>
 </head>
 <body>
@@ -234,7 +254,6 @@ textarea {
             </div>
 
             <button type="button" onclick="addComplaint()">Add Complaint</button>
-            <label for="complaint-list">Complaints List</label>
             <label for="complaint-list">Complaints List</label>
 <div id="complaint-list-container" style="border: 1px solid #dcdcdc; border-radius: 5px; padding: 10px; max-height: 150px; overflow-y: auto;">
     <ul id="complaint-list" style="list-style: none; margin: 0; padding: 0;">
@@ -307,25 +326,21 @@ textarea {
         <label for="notes">Additional Notes</label>
         <textarea id="notes" name="additionalNotes" placeholder="Enter any additional information..."></textarea>
 
-        <!-- Submit Button -->
-        <button type="submit">Submit</button>
-    </form>
+       
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+    
+    <!-- Loading spinner and message -->
+    <div id="loading-container" style="display: none; text-align: center; margin-top: 15px;">
+        <div id="loading-spinner" class="spinner"></div>
+        <p id="loading-message" class="loading-message">Please wait, submitting your data...</p>
+    </div>
+</form>
 
-<div id="submission-message" style="
-    display: none; 
-    margin-top: 20px; 
-    text-align: center; 
-    background-color: lightgreen; 
-    padding: 20px; 
-    border-radius: 10px;">
+<div id="submission-message" style="display: none; margin-top: 20px; text-align: center; background-color: lightgreen; padding: 20px; border-radius: 10px;">
     <h2 style="color: darkgreen;">Submission Successful</h2>
     <p>Your submission code is: 
-        <span id="unique-code" style="
-            background-color: white; 
-            color: black; 
-            padding: 5px 10px; 
-            border-radius: 5px;
-            font-weight: bold;">
+        <span id="unique-code" style="background-color: white; color: black; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
         </span>
     </p>
 </div>
@@ -435,63 +450,81 @@ function generateUniqueCode() {
 }
 
 function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault(); // Prevent form default submission
+
+    // Target spinner, message, and submit button
+    const spinner = document.getElementById('loading-spinner');
+    const loadingMessage = document.getElementById('loading-message');
+    const submitButton = document.querySelector('button[type="submit"]');
+
+    // Show spinner and loading message
+    spinner.style.display = 'block';
+    loadingMessage.style.display = 'block';
+    submitButton.disabled = true;
 
     const uniqueCode = generateUniqueCode();
 
     // Extract complaints from the list
     const complaintItems = Array.from(document.getElementById('complaint-list').children);
-    const complaints = complaintItems.map(item => item.textContent.replace('❌', '').trim());
+    const complaints = complaintItems.map(item => item.querySelector('.complaint-text').textContent);
 
     const formData = {
-        name: document.getElementById('name').value || '',
-        dob: document.getElementById('dob').value || '',
-        complaints: complaints, // Use complaints array
-        complaintNotes: document.getElementById('complaint-notes').value || '',
-        painScore: document.getElementById('pain-score').value || '0',
+        name: document.getElementById('name').value.trim(),
+        dob: document.getElementById('dob').value,
+        complaints: complaints,
+        complaintNotes: document.getElementById('complaint-notes').value.trim(),
+        painScore: document.getElementById('pain-score').value,
         allergies: document.querySelector('input[name="allergies"]:checked')?.value || 'No',
-        allergyExplanation: document.getElementById('allergies-explanation').value || '',
+        allergyExplanation: document.getElementById('allergies-explanation').value.trim(),
         medicine: document.querySelector('input[name="medicine"]:checked')?.value || 'No',
-        medicineExplanation: document.getElementById('medicine-explanation').value || '',
+        medicineExplanation: document.getElementById('medicine-explanation').value.trim(),
         chronicCondition: document.querySelector('input[name="chronicCondition"]:checked')?.value || 'No',
-        chronicConditionExplanation: document.getElementById('chronic-condition-explanation').value || '',
+        chronicConditionExplanation: document.getElementById('chronic-condition-explanation').value.trim(),
         surgery: document.querySelector('input[name="surgery"]:checked')?.value || 'No',
-        surgeryExplanation: document.getElementById('surgery-explanation').value || '',
+        surgeryExplanation: document.getElementById('surgery-explanation').value.trim(),
         travelHistory: document.querySelector('input[name="travelHistory"]:checked')?.value || 'No',
-        travelHistoryExplanation: document.getElementById('travel-explanation').value || '',
-        notes: document.getElementById('notes').value || '',
+        travelHistoryExplanation: document.getElementById('travel-explanation').value.trim(),
+        notes: document.getElementById('notes').value.trim(),
         code: uniqueCode,
     };
 
     console.log("Submitting data:", formData);
 
+    // Submit form data
     fetch('https://patient-traige-form.glitch.me/submit', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
     })
         .then((response) => {
             if (response.ok) return response.json();
-            else throw new Error('Failed to submit the form');
+            throw new Error('Failed to submit the form');
         })
         .then((data) => {
             console.log("Server response:", data);
 
+            // Show unique code and success message
             const uniqueCodeElement = document.getElementById('unique-code');
             uniqueCodeElement.textContent = uniqueCode;
 
             document.getElementById('triage-form').style.display = 'none';
             document.getElementById('submission-message').style.display = 'block';
 
+            // Reset the form
             document.getElementById('triage-form').reset();
             document.getElementById('complaint-list').innerHTML = '';
         })
         .catch((error) => {
             console.error('Error submitting the form:', error);
             alert('An error occurred while submitting the form. Please try again later.');
+        })
+        .finally(() => {
+            // Hide spinner and re-enable the submit button
+            spinner.style.display = 'none';
+            loadingMessage.style.display = 'none';
+            submitButton.disabled = false;
         });
-}    </script>
+}
+</script>
 </body>
 </html>
