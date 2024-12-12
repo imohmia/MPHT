@@ -138,6 +138,14 @@ textarea {
     border-bottom: 1px solid #dcdcdc;
 }
 
+#complaint-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px;
+    border-bottom: 1px solid #dcdcdc;
+}
+
 #complaint-list li span {
     flex: 1;
     text-align: left;
@@ -150,17 +158,18 @@ textarea {
     border: none;
     color: #e74c3c;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 20px; /* Icon size */
     line-height: 20px;
     transition: transform 0.2s, color 0.2s;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0; /* Remove padding for compact look */
 }
 
 #complaint-list li button:hover {
     color: #c0392b;
-    transform: scale(1.2);
+    transform: scale(1.2); /* Hover effect for the icon */
 }
 
 #complaint-list-container {
@@ -171,7 +180,6 @@ textarea {
     max-height: 200px;
     overflow-y: auto;
 }
-
     </style>
 </head>
 <body>
@@ -388,10 +396,22 @@ document.getElementById('chief-complaint').addEventListener('change', function (
 
     // Remove button
     const removeButton = document.createElement('button');
-    removeButton.innerHTML = '❌'; // Trash icon
+    removeButton.innerHTML = '🗑️'; // Fancy trash bin emoji
+    removeButton.style.cursor = 'pointer';
+    removeButton.style.border = 'none';
+    removeButton.style.backgroundColor = 'transparent';
+    removeButton.style.fontSize = '20px';
+    removeButton.style.marginLeft = '10px';
     removeButton.onclick = () => {
         complaintList.removeChild(newComplaint);
     };
+
+    // Align text and button
+    newComplaint.style.display = 'flex';
+    newComplaint.style.justifyContent = 'space-between';
+    newComplaint.style.alignItems = 'center';
+    newComplaint.style.padding = '5px 0';
+    newComplaint.style.borderBottom = '1px solid #dcdcdc';
 
     // Append elements
     newComplaint.appendChild(complaintTextNode);
