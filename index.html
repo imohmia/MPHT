@@ -132,10 +132,34 @@ textarea {
         font-size: 14px;
     }
 
-    #complaint-list {
-        max-height: 120px;
-        overflow-y: auto;
-    }
+  #complaint-list-container {
+    background-color: #f9f9f9;
+}
+
+#complaint-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+#complaint-list li:last-child {
+    border-bottom: none;
+}
+
+#complaint-list button {
+    font-size: 12px;
+    padding: 5px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#complaint-list button:hover {
+    background-color: #c0392b;
 }
     </style>
 </head>
@@ -192,9 +216,13 @@ textarea {
             <button type="button" onclick="addComplaint()">Add Complaint</button>
             <button type="button" onclick="removeComplaint()">Remove Selected Complaint</button>
             <label for="complaint-list">Complaints List</label>
-            <select id="complaint-list" name="complaints" multiple style="height: 150px;"></select>
+            <label for="complaint-list">Complaints List</label>
+<div id="complaint-list-container" style="border: 1px solid #dcdcdc; border-radius: 5px; padding: 10px; max-height: 150px; overflow-y: auto;">
+    <ul id="complaint-list" style="list-style: none; margin: 0; padding: 0;">
+        <!-- Complaints will be added here dynamically -->
+    </ul>
+</div>
             <textarea id="complaint-notes" name="complaintNotes" placeholder="Write additional details about the complaints..."></textarea>
-
             <!-- Pain Assessment -->
             <label for="pain-score">Pain Assessment</label>
             <select id="pain-score" name="painScore">
@@ -302,53 +330,58 @@ document.getElementById('chief-complaint').addEventListener('change', function (
             }
         }
  function addComplaint() {
-            const complaintList = document.getElementById('complaint-list');
-            const selectedComplaint = document.getElementById('chief-complaint').value;
+    const complaintInput = document.getElementById('chief-complaint');
+    const selectedComplaint = complaintInput.value;
 
-            if (!selectedComplaint) {
-                alert("Please select a complaint to add.");
-                return;
-            }
+    if (!selectedComplaint) {
+        alert("Please select a complaint to add.");
+        return;
+    }
 
-            let complaintText = selectedComplaint;
+    const complaintList = document.getElementById('complaint-list');
+    const existingComplaints = Array.from(complaintList.children);
 
-            if (selectedComplaint === 'Pregnancy') {
-                const doctorName = document.getElementById('doctor-name').value.trim();
-                const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
+    if (existingComplaints.some(item => item.textContent === selectedComplaint)) {
+        alert("This complaint is already in the list.");
+        return;
+    }
 
-                if (weeksPregnant) {
-                    complaintText += `, ${weeksPregnant} weeks`;
-                }
-                if (doctorName) {
-                    complaintText += `, Dr. ${doctorName}`;
-                }
+    const newComplaint = document.createElement('li');
+    newComplaint.textContent = selectedComplaint;
+    newComplaint.style.padding = '5px 0';
+    newComplaint.style.borderBottom = '1px solid #eaeaea';
+    newComplaint.style.color = '#34495e';
 
-                document.getElementById('doctor-name').value = '';
-                document.getElementById('weeks-pregnant').value = '';
-                document.getElementById('pregnancy-details').classList.add('hidden');
-            }
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.style.marginLeft = '10px';
+    removeButton.style.color = 'white';
+    removeButton.style.backgroundColor = '#e74c3c';
+    removeButton.style.border = 'none';
+    removeButton.style.borderRadius = '5px';
+    removeButton.style.padding = '5px 10px';
+    removeButton.style.cursor = 'pointer';
 
-            const existingOptions = Array.from(complaintList.options);
-            if (existingOptions.some(opt => opt.textContent === complaintText)) {
-                alert("This complaint has already been added.");
-                return;
-            }
+    removeButton.onclick = () => {
+        complaintList.removeChild(newComplaint);
+    };
 
-            const newComplaint = document.createElement('option');
-            newComplaint.textContent = complaintText;
-            complaintList.appendChild(newComplaint);
+    newComplaint.appendChild(removeButton);
+    complaintList.appendChild(newComplaint);
 
-            document.getElementById('chief-complaint').value = '';
-        }
+    // Reset the input
+    complaintInput.value = '';
+}
 
-        function removeComplaint() {
-            const complaintList = document.getElementById('complaint-list');
-            if (complaintList.selectedIndex === -1) {
-                alert("Please select a complaint to remove.");
-                return;
-            }
-            complaintList.remove(complaintList.selectedIndex);
-        }
+function removeComplaint() {
+    const complaintList = document.getElementById('complaint-list');
+    if (!complaintList.hasChildNodes()) {
+        alert("No complaints to remove.");
+        return;
+    }
+
+    complaintList.lastChild.remove();
+}
 function generateUniqueCode() {
     const randomPart = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit random number
     return `MPHT-${randomPart}`;
