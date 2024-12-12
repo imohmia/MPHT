@@ -161,6 +161,16 @@ textarea {
 #complaint-list button:hover {
     background-color: #c0392b;
 }
+    #complaint-list li span {
+    cursor: pointer;
+    color: #e74c3c;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+#complaint-list li span:hover {
+    color: #c0392b;
+}
     </style>
 </head>
 <body>
@@ -329,7 +339,7 @@ document.getElementById('chief-complaint').addEventListener('change', function (
                 explanationBox.value = '';
             }
         }
- function addComplaint() {
+function addComplaint() {
     const complaintInput = document.getElementById('chief-complaint');
     const selectedComplaint = complaintInput.value;
 
@@ -341,7 +351,7 @@ document.getElementById('chief-complaint').addEventListener('change', function (
     const complaintList = document.getElementById('complaint-list');
     const existingComplaints = Array.from(complaintList.children);
 
-    if (existingComplaints.some(item => item.textContent === selectedComplaint)) {
+    if (existingComplaints.some(item => item.textContent.includes(selectedComplaint))) {
         alert("This complaint is already in the list.");
         return;
     }
@@ -351,17 +361,15 @@ document.getElementById('chief-complaint').addEventListener('change', function (
     newComplaint.style.padding = '5px 0';
     newComplaint.style.borderBottom = '1px solid #eaeaea';
     newComplaint.style.color = '#34495e';
+    newComplaint.style.display = 'flex';
+    newComplaint.style.justifyContent = 'space-between';
+    newComplaint.style.alignItems = 'center';
 
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remove';
-    removeButton.style.marginLeft = '10px';
-    removeButton.style.color = 'white';
-    removeButton.style.backgroundColor = '#e74c3c';
-    removeButton.style.border = 'none';
-    removeButton.style.borderRadius = '5px';
-    removeButton.style.padding = '5px 10px';
+    const removeButton = document.createElement('span');
+    removeButton.textContent = '❌'; // Trash emoji or icon
     removeButton.style.cursor = 'pointer';
-
+    removeButton.style.color = '#e74c3c';
+    removeButton.style.fontSize = '18px';
     removeButton.onclick = () => {
         complaintList.removeChild(newComplaint);
     };
@@ -372,7 +380,6 @@ document.getElementById('chief-complaint').addEventListener('change', function (
     // Reset the input
     complaintInput.value = '';
 }
-
 function removeComplaint() {
     const complaintList = document.getElementById('complaint-list');
     if (!complaintList.hasChildNodes()) {
@@ -392,10 +399,14 @@ function handleSubmit(event) {
 
     const uniqueCode = generateUniqueCode();
 
+    // Extract complaints from the list
+    const complaintItems = Array.from(document.getElementById('complaint-list').children);
+    const complaints = complaintItems.map(item => item.textContent.replace('❌', '').trim());
+
     const formData = {
         name: document.getElementById('name').value || '',
         dob: document.getElementById('dob').value || '',
-        complaints: Array.from(document.getElementById('complaint-list').options).map(opt => opt.textContent) || [],
+        complaints: complaints, // Use complaints array
         complaintNotes: document.getElementById('complaint-notes').value || '',
         painScore: document.getElementById('pain-score').value || '0',
         allergies: document.querySelector('input[name="allergies"]:checked')?.value || 'No',
@@ -408,7 +419,7 @@ function handleSubmit(event) {
         surgeryExplanation: document.getElementById('surgery-explanation').value || '',
         travelHistory: document.querySelector('input[name="travelHistory"]:checked')?.value || 'No',
         travelHistoryExplanation: document.getElementById('travel-explanation').value || '',
-       notes: document.getElementById('notes').value || '',
+        notes: document.getElementById('notes').value || '',
         code: uniqueCode,
     };
 
@@ -429,11 +440,8 @@ function handleSubmit(event) {
             console.log("Server response:", data);
 
             const uniqueCodeElement = document.getElementById('unique-code');
-            if (!uniqueCodeElement) {
-                throw new Error("Unique code element not found in DOM.");
-            }
-
             uniqueCodeElement.textContent = uniqueCode;
+
             document.getElementById('triage-form').style.display = 'none';
             document.getElementById('submission-message').style.display = 'block';
 
@@ -444,6 +452,7 @@ function handleSubmit(event) {
             console.error('Error submitting the form:', error);
             alert('An error occurred while submitting the form. Please try again later.');
         });
+}
 }    </script>
 </body>
 </html>
