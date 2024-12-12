@@ -71,6 +71,16 @@
             margin-right: 20px;
             flex: 1;
         }
+        .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.action-buttons button {
+    flex: 1;
+    margin: 0 5px;
+}
 .question-group {
     margin-top: 15px;
 }
@@ -99,27 +109,34 @@ textarea {
     margin-top: 5px;
 }
 @media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 10px;
+        margin: 10px;
+    }
+
     .question-group label {
         font-size: 12px;
         margin-bottom: 5px;
     }
 
-    .question-group input[type="radio"] {
-        display: inline-block;
-        margin-right: 5px;
+    select, textarea {
+        font-size: 14px;
     }
 
-    .question-group label[for] {
-        display: inline-block;
-        font-size: 12px;
-        margin-right: 5px;
+    button {
+        padding: 12px;
+        font-size: 14px;
     }
 
-    textarea {
-        font-size: 12px;
+    #complaint-list {
+        max-height: 120px;
+        overflow-y: auto;
     }
 }
-
     </style>
 </head>
 <body>
