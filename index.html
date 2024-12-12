@@ -333,51 +333,56 @@ document.getElementById('chief-complaint').addEventListener('change', function (
         });
         function toggleExplanation(group, explanationId) {
             const explanationBox = document.getElementById(explanationId);
-            const isYesSelected = document.querySelector(`input[name="${group}"]:checked`)?.value === 'Yes';
+            const isYesSelected = document.querySelector(input[name="${group}"]:checked)?.value === 'Yes';
             explanationBox.classList.toggle('hidden', !isYesSelected);
             if (!isYesSelected) {
                 explanationBox.value = '';
             }
         }
-function addComplaint() {
-            const complaintList = document.getElementById('complaint-list');
-            const selectedComplaint = document.getElementById('chief-complaint').value;
+ function addComplaint() {
+    const complaintInput = document.getElementById('chief-complaint');
+    const selectedComplaint = complaintInput.value;
 
-            if (!selectedComplaint) {
-                alert("Please select a complaint to add.");
-                return;
-            }
+    if (!selectedComplaint) {
+        alert("Please select a complaint to add.");
+        return;
+    }
 
-            let complaintText = selectedComplaint;
+    const complaintList = document.getElementById('complaint-list');
+    const existingComplaints = Array.from(complaintList.children);
 
-            if (selectedComplaint === 'Pregnancy') {
-                const doctorName = document.getElementById('doctor-name').value.trim();
-                const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
+    if (existingComplaints.some(item => item.textContent === selectedComplaint)) {
+        alert("This complaint is already in the list.");
+        return;
+    }
 
-                if (weeksPregnant) {
-                    complaintText += `, ${weeksPregnant} weeks`;
-                }
-                if (doctorName) {
-                    complaintText += `, Dr. ${doctorName}`;
-                }
+    const newComplaint = document.createElement('li');
+    newComplaint.textContent = selectedComplaint;
+    newComplaint.style.padding = '5px 0';
+    newComplaint.style.borderBottom = '1px solid #eaeaea';
+    newComplaint.style.color = '#34495e';
 
-                document.getElementById('doctor-name').value = '';
-                document.getElementById('weeks-pregnant').value = '';
-                document.getElementById('pregnancy-details').classList.add('hidden');
-            }
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.style.marginLeft = '10px';
+    removeButton.style.color = 'white';
+    removeButton.style.backgroundColor = '#e74c3c';
+    removeButton.style.border = 'none';
+    removeButton.style.borderRadius = '5px';
+    removeButton.style.padding = '5px 10px';
+    removeButton.style.cursor = 'pointer';
 
-            const existingOptions = Array.from(complaintList.options);
-            if (existingOptions.some(opt => opt.textContent === complaintText)) {
-                alert("This complaint has already been added.");
-                return;
-            }
+    removeButton.onclick = () => {
+        complaintList.removeChild(newComplaint);
+    };
 
-            const newComplaint = document.createElement('option');
-            newComplaint.textContent = complaintText;
-            complaintList.appendChild(newComplaint);
+    newComplaint.appendChild(removeButton);
+    complaintList.appendChild(newComplaint);
 
-            document.getElementById('chief-complaint').value = '';
-        }
+    // Reset the input
+    complaintInput.value = '';
+}
+
 function removeComplaint() {
     const complaintList = document.getElementById('complaint-list');
     if (!complaintList.hasChildNodes()) {
@@ -389,7 +394,7 @@ function removeComplaint() {
 }
 function generateUniqueCode() {
     const randomPart = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit random number
-    return `MPHT-${randomPart}`;
+    return MPHT-${randomPart};
 }
 
 function handleSubmit(event) {
@@ -397,14 +402,10 @@ function handleSubmit(event) {
 
     const uniqueCode = generateUniqueCode();
 
-    // Extract complaints from the list
-    const complaintItems = Array.from(document.getElementById('complaint-list').children);
-    const complaints = complaintItems.map(item => item.textContent.replace('❌', '').trim());
-
     const formData = {
         name: document.getElementById('name').value || '',
         dob: document.getElementById('dob').value || '',
-        complaints: complaints, // Use complaints array
+        complaints: Array.from(document.getElementById('complaint-list').options).map(opt => opt.textContent) || [],
         complaintNotes: document.getElementById('complaint-notes').value || '',
         painScore: document.getElementById('pain-score').value || '0',
         allergies: document.querySelector('input[name="allergies"]:checked')?.value || 'No',
@@ -417,7 +418,7 @@ function handleSubmit(event) {
         surgeryExplanation: document.getElementById('surgery-explanation').value || '',
         travelHistory: document.querySelector('input[name="travelHistory"]:checked')?.value || 'No',
         travelHistoryExplanation: document.getElementById('travel-explanation').value || '',
-        notes: document.getElementById('notes').value || '',
+       notes: document.getElementById('notes').value || '',
         code: uniqueCode,
     };
 
@@ -438,8 +439,11 @@ function handleSubmit(event) {
             console.log("Server response:", data);
 
             const uniqueCodeElement = document.getElementById('unique-code');
-            uniqueCodeElement.textContent = uniqueCode;
+            if (!uniqueCodeElement) {
+                throw new Error("Unique code element not found in DOM.");
+            }
 
+            uniqueCodeElement.textContent = uniqueCode;
             document.getElementById('triage-form').style.display = 'none';
             document.getElementById('submission-message').style.display = 'block';
 
@@ -450,7 +454,6 @@ function handleSubmit(event) {
             console.error('Error submitting the form:', error);
             alert('An error occurred while submitting the form. Please try again later.');
         });
-}
 }    </script>
 </body>
 </html>
