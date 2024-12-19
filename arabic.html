@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج الفرز الطبي</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            max-width: 150px;
+            height: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        input, textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        input[type="radio"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            padding: 12px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .hidden {
+            display: none;
+        }
+        .question-group {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .question-group label {
+            margin-left: 20px;
+            flex: 1;
+        }
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+       .action-buttons button {
+    flex: 1;
+    margin: 0 5px;
+}
+.question-group {
+    margin-top: 15px;
+}
+
+.question-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #34495e;
+}
+
+.question-group input[type="radio"] {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.question-group label[for] {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 14px;
+    color: #34495e;
+}
+
+textarea {
+    display: block;
+    margin-top: 5px;
+}
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .question-group label {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    select, textarea {
+        font-size: 14px;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 14px;
+   /* Complaint List Styling */
+#complaint-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#complaint-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+#complaint-list li:last-child {
+    border-bottom: none;
+}
+
+#complaint-list .complaint-text {
+    flex: 1;
+    text-align: left;
+    color: #34495e;
+    font-size: 16px;
+}
+
+#complaint-list .remove-button {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#complaint-list .remove-button:hover {
+    background-color: #f8d7da;
+    color: #c0392b;
+}
+
+/* Container Styling */
+#complaint-list-container {
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.spinner {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto; /* Centered */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-message {
+    font-size: 16px;
+    color: #2c3e50;
+    margin-top: 10px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="hms-mirdif-hospital-logo.png" alt="شعار مستشفى ميردف" class="logo">
+        <h1>نموذج الفرز الطبي</h1>
+        <form id="triage-form" onsubmit="handleSubmit(event)">
+            <!-- البيانات الشخصية -->
+            <label for="name">اسم المريض</label>
+            <input type="text" id="name" name="name" placeholder="أدخل اسم المريض" required>
+
+            <label for="dob">تاريخ الميلاد</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <!-- الشكوى الرئيسية -->
+            <label for="chief-complaint">الشكوى الرئيسية</label>
+            <select id="chief-complaint" name="chiefComplaint">
+                <option value="">اختر شكوى</option>
+                <option value="آلام الظهر">آلام الظهر</option>
+                <option value="آلام الجسم (إرهاق)">آلام الجسم (إرهاق)</option>
+                <option value="آلام الصدر مع السعال">آلام الصدر مع السعال</option>
+                <option value="آلام الصدر بدون سعال">آلام الصدر بدون سعال</option>
+                <option value="السعال مع البلغم">السعال مع البلغم</option>
+                <option value="الإسهال">الإسهال</option>
+                <option value="السعال الجاف">السعال الجاف</option>
+                <option value="آلام الأذن">آلام الأذن</option>
+                <option value="آلام العين">آلام العين</option>
+                <option value="الحمى">الحمى</option>
+                <option value="الصداع">الصداع</option>
+                <option value="الصداع النصفي">الصداع النصفي</option>
+                <option value="زيادة ضربات القلب">زيادة ضربات القلب</option>
+                <option value="حقن الأدوية الموصوفة">حقن الأدوية الموصوفة</option>
+                <option value="آلام الساق">آلام الساق</option>
+                <option value="نزيف الأنف (رعاف)">نزيف الأنف (رعاف)</option>
+                <option value="الحمل">الحمل</option>
+                <option value="وصف أدوية طويلة الأجل">وصف أدوية طويلة الأجل</option>
+                <option value="سيلان الأنف">سيلان الأنف</option>
+                <option value="التهاب الحلق">التهاب الحلق</option>
+                <option value="آلام المعدة">آلام المعدة</option>
+                <option value="القيء">القيء</option>
+                <option value="آلام المعصم">آلام المعصم</option>
+                <option value="ضيق التنفس">ضيق التنفس</option>
+            </select>
+
+            <!-- تفاصيل الحمل -->
+            <div id="pregnancy-details" class="hidden">
+                <label for="doctor-name">اسم الطبيب (للمتابعة):</label>
+                <input type="text" id="doctor-name" name="doctorName" placeholder="أدخل اسم الطبيب">
+                <label for="weeks-pregnant">عدد أسابيع الحمل:</label>
+                <input type="number" id="weeks-pregnant" name="weeksPregnant" min="0" placeholder="أدخل عدد الأسابيع">
+            </div>
+   <button type="button" onclick="addComplaint()">إضافة شكوى</button>
+   <label for="complaint-list">قائمة الشكاوى</label>
+<div id="complaint-list-container" style="border: 1px solid #dcdcdc; border-radius: 5px; padding: 10px; max-height: 150px; overflow-y: auto;">
+                <ul id="complaint-list" style="list-style: none; margin: 0; padding: 0;"></ul>
+</div>
+            <textarea id="complaint-notes" name="complaintNotes" placeholder="أضف تفاصيل إضافية حول الشكاوى..."></textarea>
+
+              <!-- تقييم الألم -->
+            <label for="pain-score">تقييم الألم</label>
+            <select id="pain-score" name="painScore">
+                <option value="0">😊 لا يوجد ألم (0)</option>
+                <option value="1">🙂 ألم خفيف (1)</option>
+                <option value="2">🙂 ألم خفيف (2)</option>
+                <option value="3">😐 ألم متوسط (3)</option>
+                <option value="4">😐 ألم متوسط (4)</option>
+                <option value="5">😟 ألم شديد (5)</option>
+                <option value="6">😟 ألم شديد (6)</option>
+                <option value="7">😟 ألم شديد (7)</option>
+                <option value="8">😭 ألم شديد جدًا (8)</option>
+                <option value="9">😭 ألم شديد جدًا (9)</option>
+                <option value="10">😱 أسوأ ألم ممكن (10)</option>
+            </select>
+
+ <!-- أسئلة -->
+         <div class="question-group">
+    <label for="allergies">هل لديك حساسية تجاه أي طعام أو دواء؟ (مثل الفول السوداني، البنسلين)</label>
+    <input type="radio" id="allergies-yes" name="allergies" value="Yes" onclick="toggleExplanation('allergies', 'allergies-explanation')">
+    <label for="allergies-yes">نعم</label>
+    <input type="radio" id="allergies-no" name="allergies" value="No" onclick="toggleExplanation('allergies', 'allergies-explanation')">
+    <label for="allergies-no">لا</label>
+         </div>
+         <textarea id="allergies-explanation" class="hidden" placeholder="يرجى الشرح..." name="allergyExplanation"></textarea>
+
+<div class="question-group">
+    <label for="medicine">هل تناولت أي أدوية في المنزل؟ (مثل بنادول، أدول)</label>
+    <input type="radio" id="medicine-yes" name="medicine" value="Yes" onclick="toggleExplanation('medicine', 'medicine-explanation')">
+    <label for="medicine-yes">نعم</label>
+    <input type="radio" id="medicine-no" name="medicine" value="No" onclick="toggleExplanation('medicine', 'medicine-explanation')">
+    <label for="medicine-no">لا</label>
+</div>
+<textarea id="medicine-explanation" class="hidden" placeholder="يرجى كتابة الأدوية التي تم تناولها..." name="medicineExplanation"></textarea>
+
+<div class="question-group">
+    <label for="chronic-condition">هل لديك أي حالات طبية مزمنة؟ (مثل السكري، ارتفاع ضغط الدم)</label>
+    <input type="radio" id="chronic-condition-yes" name="chronicCondition" value="Yes" onclick="toggleExplanation('chronicCondition', 'chronic-condition-explanation')">
+    <label for="chronic-condition-yes">نعم</label>
+    <input type="radio" id="chronic-condition-no" name="chronicCondition" value="No" onclick="toggleExplanation('chronicCondition', 'chronic-condition-explanation')">
+    <label for="chronic-condition-no">لا</label>
+</div>
+<textarea id="chronic-condition-explanation" class="hidden" placeholder="يرجى كتابة الحالات المزمنة..." name="chronicConditionExplanation"></textarea>
+
+<div class="question-group">
+    <label for="surgery">هل لديك أي تاريخ مع العمليات الجراحية؟ (مثل استئصال الزائدة الدودية)</label>
+    <input type="radio" id="surgery-yes" name="surgery" value="Yes" onclick="toggleExplanation('surgery', 'surgery-explanation')">
+    <label for="surgery-yes">نعم</label>
+    <input type="radio" id="surgery-no" name="surgery" value="No" onclick="toggleExplanation('surgery', 'surgery-explanation')">
+    <label for="surgery-no">لا</label>
+</div>
+<textarea id="surgery-explanation" class="hidden" placeholder="يرجى الشرح..." name="surgeryExplanation"></textarea>
+
+<div class="question-group">
+    <label for="travel-history">هل لديك سجل سفر خلال الأسبوع الماضي؟</label>
+    <input type="radio" id="travel-history-yes" name="travelHistory" value="Yes" onclick="toggleExplanation('travelHistory', 'travel-explanation')">
+    <label for="travel-history-yes">نعم</label>
+    <input type="radio" id="travel-history-no" name="travelHistory" value="No" onclick="toggleExplanation('travelHistory', 'travel-explanation')">
+    <label for="travel-history-no">لا</label>
+</div>
+<textarea id="travel-explanation" class="hidden" placeholder="يرجى الشرح..." name="travelHistoryExplanation"></textarea>
+         
+
+             <label for="notes">ملاحظات إضافية</label>
+        <textarea id="notes" name="additionalNotes" placeholder="Enter any additional information..."></textarea>
+
+             <!-- Submit Button -->
+    <button type="submit">Submit</button>
+       
+<!-- Loading spinner and message -->
+    <div id="loading-container" style="display: none; text-align: center; margin-top: 15px;">
+        <div id="loading-spinner" class="spinner"></div>
+        <p id="loading-message" class="loading-message">Please wait, submitting your data...</p>
+    </div>
+</form>
+
+<div id="submission-message" style="display: none; margin-top: 20px; text-align: center; background-color: lightgreen; padding: 20px; border-radius: 10px;">
+    <h2 style="color: darkgreen;">تم الإرسال بنجاح</h2>
+    <p>رمز الإرسال الخاص بك هو: 
+        <span id="unique-code" style="background-color: white; color: black; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
+        </span>
+    </p>
+</div>
+
+    <script>
+       document.getElementById('chief-complaint').addEventListener('change', function () {
+    const pregnancyDetails = document.getElementById('pregnancy-details');
+    if (this.value === 'الحمل') {
+        pregnancyDetails.classList.remove('hidden');
+    } else {
+        pregnancyDetails.classList.add('hidden');
+        document.getElementById('doctor-name').value = '';
+        document.getElementById('weeks-pregnant').value = '';
+    }
+});
+
+  function toggleExplanation(group, explanationId) {
+    const explanationBox = document.getElementById(explanationId);
+    console.log(`Group: ${group}, Explanation ID: ${explanationId}`);
+    const isYesSelected = document.querySelector(`input[name="${group}"]:checked`)?.value === 'Yes';
+    console.log(`Is Yes Selected: ${isYesSelected}`);
+    explanationBox.classList.toggle('hidden', !isYesSelected);
+    if (!isYesSelected) {
+        explanationBox.value = '';
+    }
+}
+
+function addComplaint() {
+    const complaintInput = document.getElementById('chief-complaint');
+    const selectedComplaint = complaintInput.value;
+
+         if (!selectedComplaint) {
+        alert("Please select a complaint to add.");
+        return;
+    }
+    const complaintList = document.getElementById('complaint-list');
+    const existingComplaints = Array.from(complaintList.children);
+
+    // Check for duplicates
+    if (existingComplaints.some(item => item.querySelector('.complaint-text')?.textContent === selectedComplaint)) {
+        alert("هذه الشكوى موجودة بالفعل في القائمة.");
+ return;
+    }
+
+    let complaintText = selectedComplaint;
+
+    // Append additional details for "الحمل"
+    if (selectedComplaint === 'الحمل') {
+        const doctorName = document.getElementById('doctor-name').value.trim();
+        const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
+        if (weeksPregnant) {
+            complaintText += `, ${weeksPregnant} أسابيع`;
+        }
+        if (doctorName) {
+            complaintText += `, د. ${doctorName}`;
+        }
+
+        // Reset the pregnancy details inputs
+        document.getElementById('doctor-name').value = '';
+        document.getElementById('weeks-pregnant').value = '';
+        document.getElementById('pregnancy-details').classList.add('hidden');
+    }
+
+    // Create the complaint list item
+    const newComplaint = document.createElement('li');
+
+    // Complaint text
+    const complaintTextNode = document.createElement('span');
+    complaintTextNode.className = 'complaint-text';
+    complaintTextNode.textContent = complaintText;
+
+    // Remove button
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'إزالة';
+    removeButton.className = 'remove-button';
+    removeButton.onclick = () => {
+        complaintList.removeChild(newComplaint);
+    };
+
+    // Add text and button to the list item
+    newComplaint.className = 'complaint-item';
+    newComplaint.appendChild(complaintTextNode);
+    newComplaint.appendChild(removeButton);
+
+    // Append the new item to the list
+    complaintList.appendChild(newComplaint);
+
+    // Clear the complaint input
+    complaintInput.value = '';
+
+    console.log("Complaint added!");
+}
+function removeComplaint() {
+    const complaintList = document.getElementById('complaint-list');
+    if (!complaintList.hasChildNodes()) {
+        alert("لا توجد شكاوى لإزالتها."); // "No complaints to remove."
+        return;
+    }
+
+    // Remove the last complaint from the list
+    complaintList.lastChild.remove();
+    alert("تمت إزالة الشكوى الأخيرة بنجاح."); // "Last complaint removed successfully."
+}
+
+function generateUniqueCode() {
+    const randomPart = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit random number
+    return `MPHT-${randomPart}`;
+}
+function handleSubmit(event) {
+    event.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+    // عناصر التحميل، الرسالة، وزر الإرسال
+    const spinner = document.getElementById('loading-spinner');
+    const loadingMessage = document.getElementById('loading-message');
+    const submitButton = document.querySelector('button[type="submit"]');
+
+    // عرض التحميل والرسالة
+    spinner.style.display = 'block';
+    loadingMessage.style.display = 'block';
+    submitButton.disabled = true;
+
+    const uniqueCode = generateUniqueCode();
+
+    // استخراج الشكاوى من القائمة
+    const complaintItems = Array.from(document.getElementById('complaint-list').children);
+    const complaints = complaintItems.map(item => item.querySelector('.complaint-text').textContent);
+
+    const formData = {
+        name: document.getElementById('name').value.trim(),
+        dob: document.getElementById('dob').value,
+        complaints: complaints,
+        complaintNotes: document.getElementById('complaint-notes').value.trim(),
+        painScore: document.getElementById('pain-score').value,
+        allergies: document.querySelector('input[name="allergies"]:checked')?.value || 'لا',
+        allergyExplanation: document.getElementById('allergies-explanation').value.trim(),
+        medicine: document.querySelector('input[name="medicine"]:checked')?.value || 'لا',
+        medicineExplanation: document.getElementById('medicine-explanation').value.trim(),
+        chronicCondition: document.querySelector('input[name="chronicCondition"]:checked')?.value || 'لا',
+        chronicConditionExplanation: document.getElementById('chronic-condition-explanation').value.trim(),
+        surgery: document.querySelector('input[name="surgery"]:checked')?.value || 'لا',
+        surgeryExplanation: document.getElementById('surgery-explanation').value.trim(),
+        travelHistory: document.querySelector('input[name="travelHistory"]:checked')?.value || 'لا',
+        travelHistoryExplanation: document.getElementById('travel-explanation').value.trim(),
+        notes: document.getElementById('notes').value.trim(),
+        code: uniqueCode,
+    };
+
+    console.log("بيانات الإرسال:", formData);
+
+    // إرسال بيانات النموذج
+    fetch('https://patient-traige-form.glitch.me/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+    })
+        .then((response) => {
+            if (response.ok) return response.json();
+            throw new Error('فشل في إرسال النموذج');
+        })
+        .then((data) => {
+            console.log("استجابة الخادم:", data);
+
+            // عرض الكود الفريد ورسالة النجاح
+            const uniqueCodeElement = document.getElementById('unique-code');
+            uniqueCodeElement.textContent = uniqueCode;
+
+            document.getElementById('triage-form').style.display = 'none';
+            document.getElementById('submission-message').style.display = 'block';
+
+            // إعادة تعيين النموذج
+            document.getElementById('triage-form').reset();
+            document.getElementById('complaint-list').innerHTML = '';
+        })
+        .catch((error) => {
+            console.error('خطأ أثناء إرسال النموذج:', error);
+            alert('حدث خطأ أثناء إرسال النموذج. يرجى المحاولة مرة أخرى لاحقًا.');
+        })
+        .finally(() => {
+            // إخفاء التحميل وإعادة تمكين زر الإرسال
+            spinner.style.display = 'none';
+            loadingMessage.style.display = 'none';
+            submitButton.disabled = false;
+        });
+}
+    </script>
+</body>
+</html>
