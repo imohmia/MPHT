@@ -78,71 +78,30 @@
         display: none;
     }
 
-    .question-group {
-        margin-top: 15px;
-    }
+.question-group {
+    margin-top: 20px;
+}
 
-    .question-group label {
-        display: block;
-        font-size: 0.95em;
-        color: #2c3e50;
-        margin-bottom: 5px;
-    }
+.options {
+    display: flex;
+    gap: 20px; /* Adjust spacing between نعم and لا */
+    align-items: center;
+    margin-top: 10px;
+}
 
-    .question-group .options {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-top: 5px;
-    }
+.options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
 
-    .question-group .options label {
-        display: flex;
-        align-items: center;
-        font-size: 1em;
-        color: #34495e;
-        margin-right: 10px;
-        cursor: pointer;
-    }
-
-    .question-group .options label input[type="radio"] {
-        margin-left: 5px;
-        accent-color: #3498db; /* Custom color for radio buttons */
-        cursor: pointer;
-    }
+.options label input[type="radio"] {
+    margin-left: 5px; /* Space between radio button and label text */
+}
 
     .question-group textarea {
         margin-top: 10px;
         min-height: 60px;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 600px) {
-        h1 {
-            font-size: 1.5em;
-        }
-
-        input, select, textarea, button {
-            font-size: 0.9em;
-            padding: 8px;
-        }
-
-        label {
-            font-size: 0.85em;
-        }
-
-        .container {
-            padding: 15px;
-        }
-
-        .question-group .options {
-            flex-wrap: wrap;
-        }
-
-        .question-group textarea {
-            margin-top: 10px;
-            width: 100%;
-        }
     }
 
         /* Spinner */
@@ -270,47 +229,78 @@
  <!-- أسئلة -->
          <div class="question-group">
     <label for="allergies">هل لديك حساسية تجاه أي طعام أو دواء؟ (مثل الفول السوداني، البنسلين)</label>
-    <input type="radio" id="allergies-yes" name="allergies" value="Yes" onclick="toggleExplanation('allergies', 'allergies-explanation')">
-    <label for="allergies-yes">نعم</label>
-    <input type="radio" id="allergies-no" name="allergies" value="No" onclick="toggleExplanation('allergies', 'allergies-explanation')">
-    <label for="allergies-no">لا</label>
-         </div>
-         <textarea id="allergies-explanation" class="hidden" placeholder="يرجى الشرح..." name="allergyExplanation"></textarea>
+    <div class="options">
+        <label for="allergies-yes">
+            <input type="radio" id="allergies-yes" name="allergies" value="Yes" onclick="toggleExplanation('allergies', 'allergies-explanation')">
+            نعم
+        </label>
+        <label for="allergies-no">
+            <input type="radio" id="allergies-no" name="allergies" value="No" onclick="toggleExplanation('allergies', 'allergies-explanation')">
+            لا
+        </label>
+    </div>
+    <textarea id="allergies-explanation" class="hidden" placeholder="يرجى الشرح..." name="allergyExplanation"></textarea>
+</div>
 
 <div class="question-group">
     <label for="medicine">هل تناولت أي أدوية في المنزل؟ (مثل بنادول، أدول)</label>
-    <input type="radio" id="medicine-yes" name="medicine" value="Yes" onclick="toggleExplanation('medicine', 'medicine-explanation')">
-    <label for="medicine-yes">نعم</label>
-    <input type="radio" id="medicine-no" name="medicine" value="No" onclick="toggleExplanation('medicine', 'medicine-explanation')">
-    <label for="medicine-no">لا</label>
+    <div class="options">
+        <label for="medicine-yes">
+            <input type="radio" id="medicine-yes" name="medicine" value="Yes" onclick="toggleExplanation('medicine', 'medicine-explanation')">
+            نعم
+        </label>
+        <label for="medicine-no">
+            <input type="radio" id="medicine-no" name="medicine" value="No" onclick="toggleExplanation('medicine', 'medicine-explanation')">
+            لا
+        </label>
+    </div>
+    <textarea id="medicine-explanation" class="hidden" placeholder="يرجى كتابة الأدوية التي تم تناولها..." name="medicineExplanation"></textarea>
 </div>
-<textarea id="medicine-explanation" class="hidden" placeholder="يرجى كتابة الأدوية التي تم تناولها..." name="medicineExplanation"></textarea>
 
 <div class="question-group">
     <label for="chronic-condition">هل لديك أي حالات طبية مزمنة؟ (مثل السكري، ارتفاع ضغط الدم)</label>
-    <input type="radio" id="chronic-condition-yes" name="chronicCondition" value="Yes" onclick="toggleExplanation('chronicCondition', 'chronic-condition-explanation')">
-    <label for="chronic-condition-yes">نعم</label>
-    <input type="radio" id="chronic-condition-no" name="chronicCondition" value="No" onclick="toggleExplanation('chronicCondition', 'chronic-condition-explanation')">
-    <label for="chronic-condition-no">لا</label>
+    <div class="options">
+        <label for="chronic-condition-yes">
+            <input type="radio" id="chronic-condition-yes" name="chronicCondition" value="Yes" onclick="toggleExplanation('chronicCondition', 'chronic-condition-explanation')">
+            نعم
+        </label>
+        <label for="chronic-condition-no">
+            <input type="radio" id="chronic-condition-no" name="chronicCondition" value="No" onclick="toggleExplanation('chronicCondition', 'chronic-condition-explanation')">
+            لا
+        </label>
+    </div>
+    <textarea id="chronic-condition-explanation" class="hidden" placeholder="يرجى كتابة الحالات المزمنة..." name="chronicConditionExplanation"></textarea>
 </div>
-<textarea id="chronic-condition-explanation" class="hidden" placeholder="يرجى كتابة الحالات المزمنة..." name="chronicConditionExplanation"></textarea>
 
 <div class="question-group">
     <label for="surgery">هل لديك أي تاريخ مع العمليات الجراحية؟ (مثل استئصال الزائدة الدودية)</label>
-    <input type="radio" id="surgery-yes" name="surgery" value="Yes" onclick="toggleExplanation('surgery', 'surgery-explanation')">
-    <label for="surgery-yes">نعم</label>
-    <input type="radio" id="surgery-no" name="surgery" value="No" onclick="toggleExplanation('surgery', 'surgery-explanation')">
-    <label for="surgery-no">لا</label>
+    <div class="options">
+        <label for="surgery-yes">
+            <input type="radio" id="surgery-yes" name="surgery" value="Yes" onclick="toggleExplanation('surgery', 'surgery-explanation')">
+            نعم
+        </label>
+        <label for="surgery-no">
+            <input type="radio" id="surgery-no" name="surgery" value="No" onclick="toggleExplanation('surgery', 'surgery-explanation')">
+            لا
+        </label>
+    </div>
+    <textarea id="surgery-explanation" class="hidden" placeholder="يرجى الشرح..." name="surgeryExplanation"></textarea>
 </div>
-<textarea id="surgery-explanation" class="hidden" placeholder="يرجى الشرح..." name="surgeryExplanation"></textarea>
 
 <div class="question-group">
     <label for="travel-history">هل لديك سجل سفر خلال الأسبوع الماضي؟</label>
-    <input type="radio" id="travel-history-yes" name="travelHistory" value="Yes" onclick="toggleExplanation('travelHistory', 'travel-explanation')">
-    <label for="travel-history-yes">نعم</label>
-    <input type="radio" id="travel-history-no" name="travelHistory" value="No" onclick="toggleExplanation('travelHistory', 'travel-explanation')">
-    <label for="travel-history-no">لا</label>
+    <div class="options">
+        <label for="travel-history-yes">
+            <input type="radio" id="travel-history-yes" name="travelHistory" value="Yes" onclick="toggleExplanation('travelHistory', 'travel-explanation')">
+            نعم
+        </label>
+        <label for="travel-history-no">
+            <input type="radio" id="travel-history-no" name="travelHistory" value="No" onclick="toggleExplanation('travelHistory', 'travel-explanation')">
+            لا
+        </label>
+    </div>
 </div>
+
 <textarea id="travel-explanation" class="hidden" placeholder="يرجى الشرح..." name="travelHistoryExplanation"></textarea>
          
 
