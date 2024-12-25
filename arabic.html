@@ -471,11 +471,11 @@ function handleSubmit(event) {
     console.log("بيانات الإرسال:", formData);
 
     // إرسال بيانات النموذج
-    fetch('https://patient-traige-form.glitch.me/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-    })
+   fetch('https://patientlist.onrender.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+})
         .then((response) => {
             if (response.ok) return response.json();
             throw new Error('فشل في إرسال النموذج');
