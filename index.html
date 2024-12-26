@@ -16,12 +16,14 @@
             }
         }
 
-        @keyframes buttonPulse {
-            0%, 100% {
-                transform: scale(1);
+        @keyframes snow {
+            from {
+                transform: translateY(-100px);
+                opacity: 1;
             }
-            50% {
-                transform: scale(1.05);
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
             }
         }
 
@@ -36,6 +38,7 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            position: relative;
         }
 
         .container {
@@ -52,21 +55,18 @@
         .logo img {
             width: 150px;
             margin-bottom: 20px;
-            animation: fadeIn 2s ease-out;
         }
 
         h1 {
             font-size: 2.5em;
             color: #0d47a1;
             margin-bottom: 10px;
-            animation: fadeIn 2s ease-out;
         }
 
         h2 {
             font-size: 1.5em;
             color: #1565c0;
             margin-top: 0;
-            animation: fadeIn 2.5s ease-out;
         }
 
         .action-buttons {
@@ -76,7 +76,7 @@
         }
 
         .action-buttons button {
-            background-color: #42a5f5;
+            background-color: #ff5252;
             color: #fff;
             font-size: 1.2em;
             font-weight: bold;
@@ -87,11 +87,10 @@
             border-radius: 10px;
             transition: transform 0.3s, background-color 0.3s;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            animation: buttonPulse 2s infinite ease-in-out;
         }
 
         .action-buttons button:hover {
-            background-color: #1e88e5;
+            background-color: #e53935;
             transform: scale(1.1);
         }
 
@@ -100,7 +99,14 @@
             margin-top: 20px;
             color: #0d47a1;
             font-size: 1em;
-            animation: fadeIn 3s ease-out;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            font-size: 1.5em;
+            color: #fff;
+            animation: snow 5s linear infinite;
         }
 
         @media (max-width: 600px) {
@@ -147,6 +153,21 @@
                 formUrl = 'arabic.html';
             }
             window.open(formUrl, '_blank');
+        }
+
+        // Snowflake effect
+        const isChristmas = new Date() <= new Date('2024-01-03');
+        if (isChristmas) {
+            for (let i = 0; i < 50; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.textContent = '❄';
+                snowflake.style.left = `${Math.random() * 100}vw`;
+                snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                snowflake.style.fontSize = `${Math.random() * 1.5 + 0.5}em`;
+                document.body.appendChild(snowflake);
+            }
+            document.body.style.background = 'linear-gradient(to bottom, #1e3c72, #2a5298)';
         }
     </script>
 </body>
