@@ -16,20 +16,10 @@
             }
         }
 
-        @keyframes snow {
-            from {
-                transform: translateY(-100px);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
-        }
-
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #e3f2fd, #90caf9);
+            background: url('https://cdn.pixabay.com/photo/2017/12/15/13/27/christmas-tree-3023478_960_720.jpg') no-repeat center center fixed;
+            background-size: cover;
             margin: 0;
             padding: 0;
             color: #fff;
@@ -37,8 +27,6 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
-            position: relative;
         }
 
         .container {
@@ -76,7 +64,8 @@
         }
 
         .action-buttons button {
-            background-color: #ff5252;
+            position: relative;
+            background-color: #42a5f5;
             color: #fff;
             font-size: 1.2em;
             font-weight: bold;
@@ -90,8 +79,16 @@
         }
 
         .action-buttons button:hover {
-            background-color: #e53935;
+            background-color: #1e88e5;
             transform: scale(1.1);
+        }
+
+        .action-buttons button::before {
+            content: '🎅';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            font-size: 1.5em;
         }
 
         footer {
@@ -99,14 +96,6 @@
             margin-top: 20px;
             color: #0d47a1;
             font-size: 1em;
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            font-size: 1.5em;
-            color: #fff;
-            animation: snow 5s linear infinite;
         }
 
         @media (max-width: 600px) {
@@ -153,21 +142,6 @@
                 formUrl = 'arabic.html';
             }
             window.open(formUrl, '_blank');
-        }
-
-        // Snowflake effect
-        const isChristmas = new Date() <= new Date('2024-01-03');
-        if (isChristmas) {
-            for (let i = 0; i < 50; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.classList.add('snowflake');
-                snowflake.textContent = '❄';
-                snowflake.style.left = `${Math.random() * 100}vw`;
-                snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
-                snowflake.style.fontSize = `${Math.random() * 1.5 + 0.5}em`;
-                document.body.appendChild(snowflake);
-            }
-            document.body.style.background = 'linear-gradient(to bottom, #1e3c72, #2a5298)';
         }
     </script>
 </body>
