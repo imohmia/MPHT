@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Triage Form</title>
     <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(to bottom, #e3f2fd, #90caf9);
@@ -15,7 +35,9 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
+
         .container {
             max-width: 800px;
             width: 90%;
@@ -24,24 +46,35 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: center;
+            animation: fadeIn 1.5s ease-out;
         }
+
+        .logo img {
+            width: 150px;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-out;
+        }
+
         h1 {
-            text-align: center;
             font-size: 2.5em;
             color: #0d47a1;
             margin-bottom: 10px;
+            animation: fadeIn 2s ease-out;
         }
+
         h2 {
-            text-align: center;
             font-size: 1.5em;
             color: #1565c0;
             margin-top: 0;
+            animation: fadeIn 2.5s ease-out;
         }
+
         .action-buttons {
             display: flex;
             justify-content: center;
             margin: 40px 0;
         }
+
         .action-buttons button {
             background-color: #42a5f5;
             color: #fff;
@@ -54,17 +87,22 @@
             border-radius: 10px;
             transition: transform 0.3s, background-color 0.3s;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: buttonPulse 2s infinite ease-in-out;
         }
+
         .action-buttons button:hover {
             background-color: #1e88e5;
             transform: scale(1.1);
         }
+
         footer {
             text-align: center;
             margin-top: 20px;
-            color: #fff;
+            color: #0d47a1;
             font-size: 1em;
+            animation: fadeIn 3s ease-out;
         }
+
         @media (max-width: 600px) {
             .container {
                 margin: 20px;
@@ -86,6 +124,9 @@
 </head>
 <body>
     <div class="container">
+        <div class="logo">
+            <img src="https://www.hmsco.ae/wp-content/uploads/2021/07/logo_hms.png" alt="Logo">
+        </div>
         <h1>Welcome</h1>
         <h2>to the Preliminary Self-Triage Portal</h2>
         <div class="action-buttons">
@@ -93,7 +134,7 @@
             <button onclick="openForm('ar')">بالعربية</button>
         </div>
         <footer>
-            &copy; 2024 HealthCare Triage. All rights reserved.
+            &copy; 2024 HealthCare Triage. All Rights Reserved.
         </footer>
     </div>
 
