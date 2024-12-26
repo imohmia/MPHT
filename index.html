@@ -27,8 +27,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: url('https://cdn.pixabay.com/photo/2017/12/15/13/27/christmas-tree-3023478_960_720.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background: linear-gradient(to bottom, #e3f2fd, #90caf9);
             margin: 0;
             padding: 0;
             color: #fff;
@@ -48,7 +47,6 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: center;
             animation: fadeIn 1.5s ease-out;
-            position: relative;
         }
 
         .logo img {
@@ -57,24 +55,18 @@
             animation: fadeIn 2s ease-out;
         }
 
-        .santa {
-            position: absolute;
-            top: -40px;
-            right: -40px;
-            width: 100px;
-            animation: fadeIn 2s ease-out;
-        }
-
         h1 {
             font-size: 2.5em;
             color: #0d47a1;
             margin-bottom: 10px;
+            animation: fadeIn 2s ease-out;
         }
 
         h2 {
             font-size: 1.5em;
             color: #1565c0;
             margin-top: 0;
+            animation: fadeIn 2.5s ease-out;
         }
 
         .action-buttons {
@@ -102,7 +94,6 @@
             background-color: #1e88e5;
             transform: scale(1.1);
         }
-
         .action-buttons button::before {
             content: '🎅';
             margin-right: 10px;
@@ -114,6 +105,7 @@
             margin-top: 20px;
             color: #0d47a1;
             font-size: 1em;
+            animation: fadeIn 3s ease-out;
         }
 
         @media (max-width: 600px) {
@@ -140,7 +132,6 @@
         <div class="logo">
             <img src="https://www.hmsco.ae/wp-content/uploads/2021/07/logo_hms.png" alt="Logo">
         </div>
-        <img src="https://cdn.pixabay.com/photo/2017/11/18/17/42/santa-claus-2961680_960_720.png" alt="Santa Claus" class="santa">
         <h1>Welcome</h1>
         <h2>to the Preliminary Self-Triage Portal</h2>
         <div class="action-buttons">
