@@ -16,6 +16,15 @@
             }
         }
 
+        @keyframes buttonPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             background: url('https://cdn.pixabay.com/photo/2017/12/15/13/27/christmas-tree-3023478_960_720.jpg') no-repeat center center fixed;
@@ -27,6 +36,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
 
         .container {
@@ -38,11 +48,21 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: center;
             animation: fadeIn 1.5s ease-out;
+            position: relative;
         }
 
         .logo img {
             width: 150px;
             margin-bottom: 20px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .santa {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 100px;
+            animation: fadeIn 2s ease-out;
         }
 
         h1 {
@@ -64,7 +84,6 @@
         }
 
         .action-buttons button {
-            position: relative;
             background-color: #42a5f5;
             color: #fff;
             font-size: 1.2em;
@@ -76,6 +95,7 @@
             border-radius: 10px;
             transition: transform 0.3s, background-color 0.3s;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: buttonPulse 2s infinite ease-in-out;
         }
 
         .action-buttons button:hover {
@@ -85,10 +105,8 @@
 
         .action-buttons button::before {
             content: '🎅';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            font-size: 1.5em;
+            margin-right: 10px;
+            font-size: 1.2em;
         }
 
         footer {
@@ -122,6 +140,7 @@
         <div class="logo">
             <img src="https://www.hmsco.ae/wp-content/uploads/2021/07/logo_hms.png" alt="Logo">
         </div>
+        <img src="https://cdn.pixabay.com/photo/2017/11/18/17/42/santa-claus-2961680_960_720.png" alt="Santa Claus" class="santa">
         <h1>Welcome</h1>
         <h2>to the Preliminary Self-Triage Portal</h2>
         <div class="action-buttons">
