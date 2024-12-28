@@ -6,10 +6,9 @@
     <title>نموذج الفرز الطبي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <style>
- <style>
     body {
         font-family: 'Cairo', sans-serif;
-        background: linear-gradient(to bottom, #e3f2fd, #90caf9); /* Light blue gradient */
+        background: linear-gradient(to bottom, #f0f8ff, #cfe7fd); /* Gradient with soft blue tones */
         margin: 0;
         padding: 0;
         direction: rtl; /* Set text and layout direction for Arabic */
@@ -18,11 +17,12 @@
 
     .container {
         max-width: 800px;
-        margin: 20px auto;
+        margin: 30px auto;
         background: #ffffff;
-        padding: 20px;
+        padding: 25px;
         border-radius: 15px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow for elegance */
+        border: 1px solid #d9e4f2; /* Subtle border for a refined look */
     }
 
     .logo {
@@ -35,7 +35,8 @@
     h1 {
         text-align: center;
         color: #2c3e50;
-        font-size: 1.8rem;
+        font-size: 2em;
+        font-weight: 700;
         margin-bottom: 20px;
     }
 
@@ -45,7 +46,7 @@
         font-weight: bold;
         color: #34495e;
         text-align: right; /* Ensure label text aligns to the right */
-        font-size: 1rem;
+        font-size: 1.1em;
     }
 
     input, textarea, select, button {
@@ -56,7 +57,14 @@
         border-radius: 8px;
         font-size: 14px;
         text-align: right; /* Align input text for Arabic */
-        box-sizing: border-box;
+        background-color: #f9fbff; /* Light background for form elements */
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Slight shadow inside inputs */
+    }
+
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); /* Glow effect */
     }
 
     input[type="radio"], input[type="checkbox"] {
@@ -71,16 +79,14 @@
         border: none;
         cursor: pointer;
         padding: 12px;
-        margin-top: 10px;
+        margin-top: 15px;
+        text-align: center;
         border-radius: 8px;
-        transition: all 0.3s ease;
-        font-size: 1rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Subtle button shadow */
     }
 
     button:hover {
         background-color: #2980b9;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     .hidden {
@@ -103,15 +109,16 @@
         display: flex;
         align-items: center;
         margin-left: 10px; /* Proper spacing for RTL alignment */
-        font-size: 0.95rem;
         cursor: pointer;
+        font-size: 1em;
     }
 
     textarea {
         display: block;
         margin-top: 8px;
         text-align: right; /* Align text inside textarea for RTL */
-        min-height: 100px;
+        resize: vertical; /* Allow resizing vertically */
+        min-height: 80px;
     }
 
     #complaint-list-container {
@@ -119,10 +126,10 @@
         border-radius: 10px;
         padding: 15px;
         background-color: #f9f9f9;
-        max-height: 250px;
+        max-height: 200px;
         overflow-y: auto;
         text-align: right; /* Ensure list content aligns properly */
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
     }
 
     #complaint-list {
@@ -140,13 +147,7 @@
         background-color: #ffffff;
         border-radius: 8px;
         margin-bottom: 10px;
-        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease;
-    }
-
-    #complaint-list li:hover {
-        transform: scale(1.02);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     #complaint-list li:last-child {
@@ -159,54 +160,26 @@
         line-height: 1.6;
         word-wrap: break-word;
         width: 100%;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         text-align: right; /* Align text for RTL */
     }
 
     #complaint-list .remove-button {
         align-self: flex-start; /* Align button to the far left */
-        background-color: #e74c3c;
+        background-color: #eaf4fc;
         border: none;
-        color: white;
+        color: #007bff;
         font-size: 14px;
         cursor: pointer;
-        padding: 6px 12px;
-        border-radius: 8px;
-        transition: all 0.3s ease;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.2s, color 0.2s, transform 0.2s;
     }
 
     #complaint-list .remove-button:hover {
-        background-color: #c0392b;
-        transform: scale(1.1);
-    }
-
-    @media (max-width: 600px) {
-        body {
-            font-size: 14px;
-        }
-
-        .container {
-            padding: 15px;
-            margin: 15px;
-        }
-
-        label {
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-        }
-
-        input, select, textarea, button {
-            font-size: 14px;
-            padding: 10px;
-        }
-
-        #complaint-list li {
-            padding: 10px;
-        }
-
-        button {
-            font-size: 0.95rem;
-        }
+        background-color: #d0eaff;
+        color: #0056b3;
+        transform: scale(1.05);
     }
 
     #loading-container {
@@ -216,7 +189,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(255, 255, 255, 0.8); /* Subtle overlay */
+        background: rgba(52, 152, 219, 0.2); /* Transparent blue overlay */
         z-index: 10000;
         display: flex;
         align-items: center;
@@ -228,17 +201,17 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: #ffffff;
+        background: #f4faff;
         border: 2px solid #3498db;
         border-radius: 15px;
-        padding: 40px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        animation: slideIn 0.6s ease-out, pulseGlow 1.5s infinite;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: slideIn 0.8s ease-out, pulseGlow 2s infinite;
     }
 
     .spinner {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         border: 4px solid transparent;
         border-top: 4px solid #3498db;
         border-bottom: 4px solid #80d4ff;
@@ -255,10 +228,10 @@
     .loading-message {
         font-family: 'Cairo', sans-serif;
         font-size: 18px;
-        font-weight: 600;
-        color: #3498db;
+        font-weight: 500;
+        color: #0056b3;
         text-align: center;
-        margin-top: 10px;
+        margin: 0;
         animation: fadeIn 1.5s ease-in-out infinite;
     }
 
@@ -268,13 +241,13 @@
     }
 
     @keyframes slideIn {
-        0% { transform: scale(0.8); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
+        0% { transform: translateY(-20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
     }
 
     @keyframes pulseGlow {
         0%, 100% { box-shadow: 0 0 15px rgba(52, 152, 219, 0.5); }
-        50% { box-shadow: 0 0 30px rgba(52, 152, 219, 0.8); }
+        50% { box-shadow: 0 0 25px rgba(52, 152, 219, 0.8); }
     }
 </style>
 </head>
