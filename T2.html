@@ -5,73 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SELF TRIAGE FORM</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f8ff;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .logo {
-            display: block;
-            margin: 20px auto;
-            max-width: 150px;
-            height: auto;
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #34495e;
-        }
-        input, textarea, select, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #dcdcdc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        input[type="radio"] {
-            width: auto;
-            margin-right: 10px;
-        }
-        button {
-            background-color: #3498db;
-            color: white;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            padding: 12px;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-        .hidden {
-            display: none;
-        }
-        .question-group {
-            display: flex;
-            align-items: center;
-            margin-top: 15px;
-        }
-        .question-group label {
-            margin-right: 20px;
-            flex: 1;
-        }
-        .action-buttons {
+      body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.logo {
+    display: block;
+    margin: 20px auto;
+    max-width: 150px;
+    height: auto;
+}
+h1 {
+    text-align: center;
+    color: #2c3e50;
+}
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #34495e;
+}
+input, textarea, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+}
+button {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    padding: 12px;
+    margin-top: 10px;
+}
+button:hover {
+    background-color: #2980b9;
+}
+.hidden {
+    display: none;
+}
+.question-group {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+.question-group label {
+    margin-right: 20px;
+    flex: 1;
+}
+.action-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
@@ -84,26 +84,6 @@
 .question-group {
     margin-top: 15px;
 }
-
-.question-group label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #34495e;
-}
-
-.question-group input[type="radio"] {
-    display: inline-block;
-    margin-right: 5px;
-}
-
-.question-group label[for] {
-    display: inline-block;
-    margin-right: 10px;
-    font-size: 14px;
-    color: #34495e;
-}
-
 textarea {
     display: block;
     margin-top: 5px;
@@ -112,67 +92,23 @@ textarea {
     body {
         font-size: 14px;
     }
-
     .container {
         padding: 10px;
         margin: 10px;
     }
-
     .question-group label {
         font-size: 12px;
         margin-bottom: 5px;
     }
-
     select, textarea {
         font-size: 14px;
     }
-
     button {
         padding: 12px;
         font-size: 14px;
-   /* Complaint List Styling */
-#complaint-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    }
 }
 
-#complaint-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 5px;
-    border-bottom: 1px solid #dcdcdc;
-}
-
-#complaint-list li:last-child {
-    border-bottom: none;
-}
-
-#complaint-list .complaint-text {
-    flex: 1;
-    text-align: left;
-    color: #34495e;
-    font-size: 16px;
-}
-
-#complaint-list .remove-button {
-    background: none;
-    border: none;
-    color: #e74c3c;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: background-color 0.2s, color 0.2s;
-}
-
-#complaint-list .remove-button:hover {
-    background-color: #f8d7da;
-    color: #c0392b;
-}
-
-/* Container Styling */
 #complaint-list-container {
     border: 1px solid #dcdcdc;
     border-radius: 10px;
@@ -181,26 +117,141 @@ textarea {
     max-height: 200px;
     overflow-y: auto;
 }
+
+#complaint-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#complaint-list li {
+    display: flex;
+    flex-direction: column; /* Stack text and button vertically */
+    align-items: flex-start; /* Align items to the start of the container */
+    padding: 10px;
+    border-bottom: 1px solid #dcdcdc;
+    background-color: #ffffff; /* Adds a white background for each item */
+    border-radius: 5px; /* Rounded edges for better appearance */
+    margin-bottom: 10px; /* Adds spacing between complaints */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+#complaint-list li:last-child {
+    margin-bottom: 0; /* Removes extra margin for the last item */
+}
+
+#complaint-list .complaint-text {
+    color: #34495e;
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word; /* Handles long words */
+    width: 100%; /* Ensures full width for consistency */
+    margin-bottom: 5px; /* Adds spacing between text and button */
+}
+
+#complaint-list .remove-button {
+    align-self: flex-end; /* Aligns the button to the right */
+    background-color: #eaf4fc; /* Light blue background */
+    border: none;
+    color: #007bff; /* Blue text */
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px 10px; /* Better click area */
+    border-radius: 5px; /* Rounded button */
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+#complaint-list .remove-button:hover {
+    background-color: #d0eaff; /* Darker blue background on hover */
+    color: #0056b3; /* Darker blue text on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+#loading-container {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.7); /* Lower opacity white background */
+    z-index: 10000; /* Bring above other elements */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f4faff; /* Soft light blue box */
+    border: 2px solid #3498db; /* Blue border */
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    animation: slideIn 0.8s ease-out, pulseGlow 2s infinite;
+}
+
 .spinner {
-    border: 4px solid #f3f3f3; /* Light grey */
+    width: 50px;
+    height: 50px;
+    border: 4px solid transparent;
     border-top: 4px solid #3498db; /* Blue */
+    border-bottom: 4px solid #80d4ff; /* Light blue */
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
     animation: spin 1s linear infinite;
-    margin: 0 auto; /* Centered */
+    margin-bottom: 20px; /* Space below the spinner */
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(52, 152, 219, 0.5), 0 0 30px rgba(128, 212, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(52, 152, 219, 0.8), 0 0 40px rgba(128, 212, 255, 0.8);
+    }
 }
 
 .loading-message {
-    font-size: 16px;
-    color: #2c3e50;
-    margin-top: 10px;
+    font-family: 'Poppins', sans-serif; /* Modern and clean font */
+    font-size: 18px;
+    font-weight: 500;
+    color: #0056b3; /* Deep blue */
+    text-align: center;
+    margin: 0;
+    animation: fadeIn 1.5s ease-in-out infinite;
 }
+
+@keyframes fadeIn {
+    0%, 100% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -364,7 +415,8 @@ document.getElementById('chief-complaint').addEventListener('change', function (
                 explanationBox.value = '';
             }
         }
- function addComplaint() {
+
+function addComplaint() {
     const complaintInput = document.getElementById('chief-complaint');
     const selectedComplaint = complaintInput.value;
 
@@ -382,7 +434,7 @@ document.getElementById('chief-complaint').addEventListener('change', function (
         return;
     }
 
-    // Create the complaint text
+    // Prepare the complaint text
     let complaintText = selectedComplaint;
 
     // Append additional details for "Pregnancy"
@@ -402,48 +454,44 @@ document.getElementById('chief-complaint').addEventListener('change', function (
         document.getElementById('pregnancy-details').classList.add('hidden');
     }
 
-    // Create the complaint list item
+    // Create a new complaint item
     const newComplaint = document.createElement('li');
+    newComplaint.className = 'complaint-item';
 
-    // Complaint text
+    // Add complaint text
     const complaintTextNode = document.createElement('span');
     complaintTextNode.className = 'complaint-text';
     complaintTextNode.textContent = complaintText;
 
-    // Remove button
+    // Add remove button
     const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remove'; // Use "Remove" text for simplicity
+    removeButton.textContent = 'Remove';
     removeButton.className = 'remove-button';
     removeButton.onclick = () => {
         complaintList.removeChild(newComplaint);
     };
 
-    // Align text and button
-    newComplaint.className = 'complaint-item';
+    // Append the text and button to the new complaint item
     newComplaint.appendChild(complaintTextNode);
     newComplaint.appendChild(removeButton);
+
+    // Add the new complaint to the list
     complaintList.appendChild(newComplaint);
 
-    // Reset the input
+    // Reset the input field
     complaintInput.value = '';
 }
-function removeComplaint() {
+
+function removeLastComplaint() {
     const complaintList = document.getElementById('complaint-list');
     if (!complaintList.hasChildNodes()) {
         alert("No complaints to remove.");
         return;
     }
 
+    // Remove the last complaint in the list
     complaintList.lastChild.remove();
 }
-        function removeComplaint() {
-            const complaintList = document.getElementById('complaint-list');
-            if (complaintList.selectedIndex === -1) {
-                alert("Please select a complaint to remove.");
-                return;
-            }
-            complaintList.remove(complaintList.selectedIndex);
-        }
 function generateUniqueCode() {
     const randomPart = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit random number
     return `MPHT-${randomPart}`;
@@ -452,15 +500,18 @@ function generateUniqueCode() {
 function handleSubmit(event) {
     event.preventDefault(); // Prevent form default submission
 
-    // Target spinner, message, and submit button
+    // Target elements
     const spinner = document.getElementById('loading-spinner');
+    const loadingContainer = document.getElementById('loading-container');
     const loadingMessage = document.getElementById('loading-message');
     const submitButton = document.querySelector('button[type="submit"]');
+    const form = document.getElementById('triage-form');
 
     // Show spinner and loading message
+    loadingContainer.style.display = 'flex'; // Ensure container becomes visible
     spinner.style.display = 'block';
     loadingMessage.style.display = 'block';
-    submitButton.disabled = true;
+    submitButton.disabled = true; // Disable the submit button to prevent multiple submissions
 
     const uniqueCode = generateUniqueCode();
 
@@ -468,6 +519,7 @@ function handleSubmit(event) {
     const complaintItems = Array.from(document.getElementById('complaint-list').children);
     const complaints = complaintItems.map(item => item.querySelector('.complaint-text').textContent);
 
+    // Create form data object
     const formData = {
         name: document.getElementById('name').value.trim(),
         dob: document.getElementById('dob').value,
@@ -490,28 +542,31 @@ function handleSubmit(event) {
 
     console.log("Submitting data:", formData);
 
-    // Submit form data
-   fetch('https://patientlist.onrender.com/submit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData),
-})
+    // Submit form data to the API
+    fetch('https://patientlist.onrender.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+    })
         .then((response) => {
-            if (response.ok) return response.json();
-            throw new Error('Failed to submit the form');
+            if (response.ok) {
+                console.log("Response received:", response);
+                return response.json();
+            }
+            throw new Error(`Failed to submit the form. Status: ${response.status}`);
         })
         .then((data) => {
             console.log("Server response:", data);
 
-            // Show unique code and success message
+            // Show success message and unique code
             const uniqueCodeElement = document.getElementById('unique-code');
             uniqueCodeElement.textContent = uniqueCode;
 
-            document.getElementById('triage-form').style.display = 'none';
-            document.getElementById('submission-message').style.display = 'block';
+            form.style.display = 'none'; // Hide the form
+            document.getElementById('submission-message').style.display = 'block'; // Show success message
 
-            // Reset the form
-            document.getElementById('triage-form').reset();
+            // Reset the form and complaint list
+            form.reset();
             document.getElementById('complaint-list').innerHTML = '';
         })
         .catch((error) => {
@@ -519,7 +574,9 @@ function handleSubmit(event) {
             alert('An error occurred while submitting the form. Please try again later.');
         })
         .finally(() => {
-            // Hide spinner and re-enable the submit button
+            // Hide spinner, message, and re-enable submit button
+            console.log("Hiding spinner and enabling submit button");
+            loadingContainer.style.display = 'none';
             spinner.style.display = 'none';
             loadingMessage.style.display = 'none';
             submitButton.disabled = false;
