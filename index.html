@@ -25,9 +25,24 @@
             }
         }
 
+        @keyframes sparkle {
+            0% {
+                color: #1e90ff;
+                text-shadow: 0 0 10px #1e90ff, 0 0 20px #1e90ff;
+            }
+            50% {
+                color: #4682b4;
+                text-shadow: 0 0 15px #4682b4, 0 0 25px #4682b4;
+            }
+            100% {
+                color: #1e90ff;
+                text-shadow: 0 0 10px #1e90ff, 0 0 20px #1e90ff;
+            }
+        }
+
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #e3f2fd, #90caf9);
+            background: linear-gradient(to bottom, #1e3c72, #2a5298);
             margin: 0;
             padding: 0;
             color: #fff;
@@ -46,7 +61,17 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: center;
+            position: relative;
             animation: fadeIn 1.5s ease-out;
+        }
+
+     
+        .uae-flag {
+            width: 80px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            animation: fadeIn 2s ease-out;
         }
 
         .logo img {
@@ -57,14 +82,14 @@
 
         h1 {
             font-size: 2.5em;
-            color: #0d47a1;
+            color: #1e90ff;
             margin-bottom: 10px;
             animation: fadeIn 2s ease-out;
         }
 
         h2 {
             font-size: 1.5em;
-            color: #1565c0;
+            color: #4682b4;
             margin-top: 0;
             animation: fadeIn 2.5s ease-out;
         }
@@ -76,7 +101,7 @@
         }
 
         .action-buttons button {
-            background-color: #42a5f5;
+            background-color: #6a5acd;
             color: #fff;
             font-size: 1.2em;
             font-weight: bold;
@@ -91,9 +116,10 @@
         }
 
         .action-buttons button:hover {
-            background-color: #1e88e5;
+            background-color: #483d8b;
             transform: scale(1.1);
         }
+
         .action-buttons button::before {
             content: '🎅';
             margin-right: 10px;
@@ -103,7 +129,7 @@
         footer {
             text-align: center;
             margin-top: 20px;
-            color: #0d47a1;
+            color: #1e90ff;
             font-size: 1em;
             animation: fadeIn 3s ease-out;
         }
@@ -125,10 +151,20 @@
                 margin: 0 10px;
             }
         }
+.new-year-message {
+    font-size: 1em;
+    font-weight: bold;
+    color: #000; /* Black font color */
+    margin-bottom: 20px;
+    animation: none; /* Remove sparkle animation */
+}
+
     </style>
 </head>
 <body>
     <div class="container">
+        <img class="uae-flag" src="https://cdn.pixabay.com/photo/2020/06/26/11/43/uae-5342435_1280.png" alt="UAE Flag">
+        <div class="new-year-message">✨ Happy 2025! 🎉 ✨</div>
         <div class="logo">
             <img src="https://www.hmsco.ae/wp-content/uploads/2021/07/logo_hms.png" alt="Logo">
         </div>
@@ -139,7 +175,7 @@
             <button onclick="openForm('ar')">بالعربية</button>
         </div>
         <footer>
-            &copy; 2024 HealthCare Triage. All Rights Reserved.
+            &copy; 2025 HealthCare Triage. All Rights Reserved.
         </footer>
     </div>
 
