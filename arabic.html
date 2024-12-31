@@ -263,44 +263,170 @@
             <label for="dob">تاريخ الميلاد</label>
             <input type="date" id="dob" name="dob" required>
 
-            <!-- الشكوى الرئيسية -->
-            <label for="chief-complaint">الشكوى الرئيسية</label>
-            <select id="chief-complaint" name="chiefComplaint">
-                <option value="">اختر شكوى</option>
-                <option value="آلام الظهر">آلام الظهر</option>
-                <option value="آلام الجسم (إرهاق)">آلام الجسم (إرهاق)</option>
-                <option value="آلام الصدر مع السعال">آلام الصدر مع السعال</option>
-                <option value="آلام الصدر بدون سعال">آلام الصدر بدون سعال</option>
-                <option value="السعال مع البلغم">السعال مع البلغم</option>
-                <option value="الإسهال">الإسهال</option>
-                <option value="السعال الجاف">السعال الجاف</option>
-                <option value="آلام الأذن">آلام الأذن</option>
-                <option value="آلام العين">آلام العين</option>
-                <option value="الحمى">الحمى</option>
-                <option value="الصداع">الصداع</option>
-                <option value="الصداع النصفي">الصداع النصفي</option>
-                <option value="زيادة ضربات القلب">زيادة ضربات القلب</option>
-                <option value="حقن الأدوية الموصوفة">حقن الأدوية الموصوفة</option>
-                <option value="آلام الساق">آلام الساق</option>
-                <option value="نزيف الأنف (رعاف)">نزيف الأنف (رعاف)</option>
-                <option value="الحمل">الحمل</option>
-                <option value="وصف أدوية طويلة الأجل">وصف أدوية طويلة الأجل</option>
-                <option value="سيلان الأنف">سيلان الأنف</option>
-                <option value="التهاب الحلق">التهاب الحلق</option>
-                <option value="آلام المعدة">آلام المعدة</option>
-                <option value="القيء">القيء</option>
-                <option value="آلام المعصم">آلام المعصم</option>
-                <option value="ضيق التنفس">ضيق التنفس</option>
-                <option value="إجازة مرضية">إجازة مرضية</option>
-            </select>
+<!-- الشكوى الرئيسية -->
+<label for="chief-complaint">الشكوى الرئيسية</label>
+<select id="chief-complaint" name="chiefComplaint">
+    <option value="">اختر شكوى</option>
+
+    <!-- شكاوى القلب والجهاز التنفسي -->
+    <optgroup label="شكاوى القلب والجهاز التنفسي">
+        <option value="آلام الصدر">آلام الصدر</option>
+        <option value="ضيق التنفس">ضيق التنفس</option>
+        <option value="زيادة ضربات القلب">زيادة ضربات القلب</option>
+        <option value="الدوار">الدوار</option>
+        <option value="السعال">السعال</option>
+        <option value="الأزيز">الأزيز</option>
+        <option value="صعوبة التنفس">صعوبة التنفس</option>
+    </optgroup>
+
+    <!-- شكاوى عامة وأعراض معدية -->
+    <optgroup label="شكاوى عامة وأعراض معدية">
+        <option value="الحمى">الحمى</option>
+        <option value="التهاب الحلق">التهاب الحلق</option>
+        <option value="سيلان الأنف">سيلان الأنف</option>
+        <option value="أعراض تشبه الأنفلونزا">أعراض تشبه الأنفلونزا</option>
+        <option value="السعال المستمر">السعال المستمر</option>
+        <option value="آلام الجسم">آلام الجسم</option>
+        <option value="الطفح الجلدي">الطفح الجلدي</option>
+        <option value="الإرهاق">الإرهاق</option>
+        <option value="القشعريرة">القشعريرة</option>
+    </optgroup>
+
+    <!-- شكاوى الجهاز الهضمي -->
+    <optgroup label="شكاوى الجهاز الهضمي">
+        <option value="آلام البطن">آلام البطن</option>
+        <option value="الغثيان والقيء">الغثيان والقيء</option>
+        <option value="الإسهال">الإسهال</option>
+        <option value="الإمساك">الإمساك</option>
+        <option value="حرقة المعدة">حرقة المعدة</option>
+        <option value="وجود دم في البراز">وجود دم في البراز</option>
+        <option value="فقدان الشهية">فقدان الشهية</option>
+    </optgroup>
+
+    <!-- شكاوى الجهاز العصبي -->
+    <optgroup label="شكاوى الجهاز العصبي">
+        <option value="صداع شديد">صداع شديد</option>
+        <option value="الصداع النصفي">الصداع النصفي</option>
+        <option value="ضعف في الأطراف">ضعف في الأطراف</option>
+        <option value="ارتباك">ارتباك</option>
+        <option value="تغير في الحالة العقلية">تغير في الحالة العقلية</option>
+        <option value="النوبات">النوبات</option>
+        <option value="فقدان الوعي">فقدان الوعي</option>
+    </optgroup>
+
+    <!-- شكاوى الإصابات -->
+    <optgroup label="شكاوى الإصابات">
+        <option value="إصابة نافذة">إصابة نافذة</option>
+        <option value="جرح">جرح</option>
+        <option value="كسر">كسر</option>
+        <option value="التواء">التواء</option>
+        <option value="إصابات حادث سيارة">إصابات حادث سيارة</option>
+        <option value="إصابات السقوط">إصابات السقوط</option>
+        <option value="الحروق">الحروق</option>
+    </optgroup>
+
+    <!-- شكاوى الجهاز العضلي الهيكلي -->
+    <optgroup label="شكاوى الجهاز العضلي الهيكلي">
+        <option value="آلام الظهر">آلام الظهر</option>
+        <option value="آلام المفاصل">آلام المفاصل</option>
+        <option value="آلام الرقبة">آلام الرقبة</option>
+        <option value="آلام الكتف">آلام الكتف</option>
+        <option value="آلام الركبة">آلام الركبة</option>
+        <option value="تورم في الأطراف">تورم في الأطراف</option>
+    </optgroup>
+
+    <!-- شكاوى مرتبطة بالحمل -->
+    <optgroup label="شكاوى مرتبطة بالحمل">
+        <option value="نزيف مهبلي شديد أثناء الحمل">نزيف مهبلي شديد أثناء الحمل</option>
+        <option value="نزيف مهبلي خفيف أثناء الحمل">نزيف مهبلي خفيف أثناء الحمل</option>
+        <option value="قلة حركة الجنين">قلة حركة الجنين</option>
+        <option value="طلب اختبار حمل">طلب اختبار حمل</option>
+        <option value="زيارة متابعة الحمل">زيارة متابعة الحمل</option>
+    </optgroup>
+
+    <!-- شكاوى الأطفال -->
+    <optgroup label="شكاوى الأطفال">
+        <option value="الحمى عند الأطفال">الحمى عند الأطفال</option>
+        <option value="الطفح الجلدي عند الأطفال">الطفح الجلدي عند الأطفال</option>
+        <option value="القيء عند الأطفال">القيء عند الأطفال</option>
+        <option value="الإسهال عند الأطفال">الإسهال عند الأطفال</option>
+    </optgroup>
+
+    <!-- المتابعة مع الحالات المزمنة -->
+    <optgroup label="المتابعة مع الحالات المزمنة">
+        <option value="متابعة مرض السكري">متابعة مرض السكري</option>
+        <option value="متابعة مرض ارتفاع ضغط الدم">متابعة مرض ارتفاع ضغط الدم</option>
+        <option value="ارتفاع نسبة السكر في الدم">ارتفاع نسبة السكر في الدم</option>
+        <option value="انخفاض نسبة السكر في الدم">انخفاض نسبة السكر في الدم</option>
+        <option value="طلب إعادة وصف الأدوية">طلب إعادة وصف الأدوية</option>
+        <option value="إعادة وصف مكملات الحديد">إعادة وصف مكملات الحديد</option>
+        <option value="طلب حقن الفيرينجكت">طلب حقن الفيرينجكت</option>
+    </optgroup>
+
+    <!-- شكاوى بيئية -->
+    <optgroup label="شكاوى بيئية">
+        <option value="الإرهاق الحراري">الإرهاق الحراري</option>
+        <option value="الجفاف">الجفاف</option>
+        <option value="ضربة شمس">ضربة شمس</option>
+        <option value="أعراض حساسية الغبار">أعراض حساسية الغبار</option>
+        <option value="أعراض متعلقة بالعواصف الرملية">أعراض متعلقة بالعواصف الرملية</option>
+        <option value="التعرض لحرارة شديدة">التعرض لحرارة شديدة</option>
+    </optgroup>
+
+    <!-- تفاعلات حساسية -->
+    <optgroup label="تفاعلات حساسية">
+        <option value="رد فعل حساسية غذائية">رد فعل حساسية غذائية</option>
+        <option value="رد فعل لدغة حشرة">رد فعل لدغة حشرة</option>
+        <option value="رد فعل حساسية دوائية">رد فعل حساسية دوائية</option>
+    </optgroup>
+
+    <!-- شكاوى الجهاز البولي -->
+    <optgroup label="شكاوى الجهاز البولي">
+        <option value="التبول المؤلم">التبول المؤلم</option>
+        <option value="وجود دم في البول">وجود دم في البول</option>
+        <option value="كثرة التبول">كثرة التبول</option>
+        <option value="أعراض التهاب المسالك البولية">أعراض التهاب المسالك البولية</option>
+    </optgroup>
+
+    <!-- شكاوى الأذن والأنف والعين -->
+    <optgroup label="شكاوى الأذن والأنف والعين">
+        <option value="آلام الأذن">آلام الأذن</option>
+        <option value="فقدان السمع">فقدان السمع</option>
+        <option value="نزيف الأنف">نزيف الأنف</option>
+        <option value="آلام العين">آلام العين</option>
+        <option value="تغيرات في الرؤية">تغيرات في الرؤية</option>
+        <option value="احمرار العين">احمرار العين</option>
+        <option value="جسم غريب في العين">جسم غريب في العين</option>
+    </optgroup>
+
+    <!-- الطلبات والاحتياجات غير العاجلة -->
+    <optgroup label="الطلبات والاحتياجات غير العاجلة">
+        <option value="طلب إجازة مرضية">طلب إجازة مرضية</option>
+        <option value="طلب تطعيم">طلب تطعيم</option>
+        <option value="طلب فحص اللياقة الطبية">طلب فحص اللياقة الطبية</option>
+        <option value="فحص صحي عام">فحص صحي عام</option>
+    </optgroup>
+
+    <!-- شكاوى أخرى -->
+    <optgroup label="شكاوى أخرى">
+        <option value="تضخم الغدد الليمفاوية">تضخم الغدد الليمفاوية</option>
+        <option value="اليرقان">اليرقان</option>
+        <option value="طعم معدني">طعم معدني</option>
+        <option value="فواق مستمر">فواق مستمر</option>
+        <option value="اختناق">اختناق</option>
+        <option value="آلام المستقيم">آلام المستقيم</option>
+        <option value="إفرازات مهبلية">إفرازات مهبلية</option>
+    </optgroup>
+</select>
 
             <!-- تفاصيل الحمل -->
-            <div id="pregnancy-details" class="hidden">
-                <label for="doctor-name">اسم الطبيب (للمتابعة):</label>
-                <input type="text" id="doctor-name" name="doctorName" placeholder="أدخل اسم الطبيب">
-                <label for="weeks-pregnant">عدد أسابيع الحمل:</label>
-                <input type="number" id="weeks-pregnant" name="weeksPregnant" min="0" placeholder="أدخل عدد الأسابيع">
-            </div>
+          <div id="pregnancy-details" class="hidden">
+    <label for="doctor-name">اسم الطبيب (للمتابعة):</label>
+    <input type="text" id="doctor-name" name="doctorName" placeholder="أدخل اسم الطبيب">
+    <label for="weeks-pregnant">عدد أسابيع الحمل:</label>
+    <input type="number" id="weeks-pregnant" name="weeksPregnant" min="0" placeholder="أدخل عدد الأسابيع">
+</div>
+
    <button type="button" onclick="addComplaint()">إضافة شكوى</button>
    <label for="complaint-list">قائمة الشكاوى</label>
 <div id="complaint-list-container" style="border: 1px solid #dcdcdc; border-radius: 5px; padding: 10px; max-height: 150px; overflow-y: auto;">
@@ -423,94 +549,115 @@
     </p>
 </div>
 
-    <script>
-       document.getElementById('chief-complaint').addEventListener('change', function () {
-    const pregnancyDetails = document.getElementById('pregnancy-details');
-    if (this.value === 'الحمل') {
-        pregnancyDetails.classList.remove('hidden');
-    } else {
-        pregnancyDetails.classList.add('hidden');
-        document.getElementById('doctor-name').value = '';
-        document.getElementById('weeks-pregnant').value = '';
-    }
-});
+  <script>
+    // Show or hide pregnancy details based on the selected complaint
+    document.getElementById('chief-complaint').addEventListener('change', function () {
+        const pregnancyDetails = document.getElementById('pregnancy-details');
+        const pregnancyRelatedComplaints = [
+            "نزيف مهبلي شديد أثناء الحمل",
+            "نزيف مهبلي خفيف أثناء الحمل",
+            "قلة حركة الجنين",
+            "طلب اختبار حمل",
+            "زيارة متابعة الحمل"
+        ];
 
-  function toggleExplanation(group, explanationId) {
-    const explanationBox = document.getElementById(explanationId);
-    console.log(`Group: ${group}, Explanation ID: ${explanationId}`);
-    const isYesSelected = document.querySelector(`input[name="${group}"]:checked`)?.value === 'Yes';
-    console.log(`Is Yes Selected: ${isYesSelected}`);
-    explanationBox.classList.toggle('hidden', !isYesSelected);
-    if (!isYesSelected) {
-        explanationBox.value = '';
-    }
-}
-
-function addComplaint() {
-    const complaintInput = document.getElementById('chief-complaint');
-    const selectedComplaint = complaintInput.value;
-
-         if (!selectedComplaint) {
-        alert("Please select a complaint to add.");
-        return;
-    }
-    const complaintList = document.getElementById('complaint-list');
-    const existingComplaints = Array.from(complaintList.children);
-
-    // Check for duplicates
-    if (existingComplaints.some(item => item.querySelector('.complaint-text')?.textContent === selectedComplaint)) {
-        alert("هذه الشكوى موجودة بالفعل في القائمة.");
- return;
-    }
-
-    let complaintText = selectedComplaint;
-
-    // Append additional details for "الحمل"
-    if (selectedComplaint === 'الحمل') {
-        const doctorName = document.getElementById('doctor-name').value.trim();
-        const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
-        if (weeksPregnant) {
-            complaintText += `, ${weeksPregnant} أسابيع`;
+        if (pregnancyRelatedComplaints.includes(this.value)) {
+            pregnancyDetails.classList.remove('hidden');
+        } else {
+            pregnancyDetails.classList.add('hidden');
+            document.getElementById('doctor-name').value = '';
+            document.getElementById('weeks-pregnant').value = '';
         }
-        if (doctorName) {
-            complaintText += `, د. ${doctorName}`;
+    });
+
+    // Toggle explanation textarea visibility for Yes/No questions
+    function toggleExplanation(group, explanationId) {
+        const explanationBox = document.getElementById(explanationId);
+        const isYesSelected = document.querySelector(`input[name="${group}"]:checked`)?.value === 'Yes';
+        explanationBox.classList.toggle('hidden', !isYesSelected);
+        if (!isYesSelected) {
+            explanationBox.value = ''; // Clear the explanation box if 'No' is selected
+        }
+    }
+
+    // Add a complaint to the list
+    function addComplaint() {
+        const complaintInput = document.getElementById('chief-complaint');
+        const selectedComplaint = complaintInput.value;
+
+        if (!selectedComplaint) {
+            alert("الرجاء اختيار شكوى لإضافتها.");
+            return;
         }
 
-        // Reset the pregnancy details inputs
-        document.getElementById('doctor-name').value = '';
-        document.getElementById('weeks-pregnant').value = '';
-        document.getElementById('pregnancy-details').classList.add('hidden');
+        const complaintList = document.getElementById('complaint-list');
+        const existingComplaints = Array.from(complaintList.children);
+
+        // Check for duplicates
+        if (existingComplaints.some(item => item.querySelector('.complaint-text')?.textContent.startsWith(selectedComplaint))) {
+            alert("هذه الشكوى موجودة بالفعل في القائمة.");
+            return;
+        }
+
+        let complaintText = selectedComplaint;
+
+        // Append additional details for pregnancy-related complaints
+        const pregnancyRelatedComplaints = [
+            "نزيف مهبلي شديد أثناء الحمل",
+            "نزيف مهبلي خفيف أثناء الحمل",
+            "قلة حركة الجنين",
+            "طلب اختبار حمل",
+            "زيارة متابعة الحمل"
+        ];
+
+        if (pregnancyRelatedComplaints.includes(selectedComplaint)) {
+            const doctorName = document.getElementById('doctor-name').value.trim();
+            const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
+
+            if (weeksPregnant) {
+                complaintText += `, ${weeksPregnant} أسابيع`;
+            }
+
+            if (doctorName) {
+                complaintText += `, د. ${doctorName}`;
+            }
+
+            // Reset pregnancy details inputs
+            document.getElementById('doctor-name').value = '';
+            document.getElementById('weeks-pregnant').value = '';
+            document.getElementById('pregnancy-details').classList.add('hidden');
+        }
+
+        // Create a new list item for the complaint
+        const newComplaint = document.createElement('li');
+        newComplaint.className = 'complaint-item';
+
+        // Add complaint text
+        const complaintTextNode = document.createElement('span');
+        complaintTextNode.className = 'complaint-text';
+        complaintTextNode.textContent = complaintText;
+
+        // Add a remove button
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'إزالة';
+        removeButton.className = 'remove-button';
+        removeButton.onclick = () => {
+            complaintList.removeChild(newComplaint);
+        };
+
+        // Append text and button to the list item
+        newComplaint.appendChild(complaintTextNode);
+        newComplaint.appendChild(removeButton);
+
+        // Append the new complaint to the list
+        complaintList.appendChild(newComplaint);
+
+        // Clear the complaint input field
+        complaintInput.value = '';
+
+        console.log("تمت إضافة الشكوى بنجاح!");
     }
 
-    // Create the complaint list item
-    const newComplaint = document.createElement('li');
-
-    // Complaint text
-    const complaintTextNode = document.createElement('span');
-    complaintTextNode.className = 'complaint-text';
-    complaintTextNode.textContent = complaintText;
-
-    // Remove button
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'إزالة';
-    removeButton.className = 'remove-button';
-    removeButton.onclick = () => {
-        complaintList.removeChild(newComplaint);
-    };
-
-    // Add text and button to the list item
-    newComplaint.className = 'complaint-item';
-    newComplaint.appendChild(complaintTextNode);
-    newComplaint.appendChild(removeButton);
-
-    // Append the new item to the list
-    complaintList.appendChild(newComplaint);
-
-    // Clear the complaint input
-    complaintInput.value = '';
-
-    console.log("Complaint added!");
-}
 function removeComplaint() {
     const complaintList = document.getElementById('complaint-list');
     if (!complaintList.hasChildNodes()) {
