@@ -266,43 +266,169 @@ textarea {
             <label for="dob">Date of Birth</label>
             <input type="date" id="dob" name="dob" required>
 
-            <!-- Chief Complaints -->
-            <label for="chief-complaint">Chief Complaint</label>
-            <select id="chief-complaint" name="chiefComplaint">
-                <option value="">Select an option</option>
-                <option value="Back Pain">Back Pain</option>
-                <option value="Body Pain (Fatigue)">Body Pain (Fatigue)</option>
-                <option value="Chest Pain with Cough">Chest Pain with Cough</option>
-                <option value="Chest Pain without Cough">Chest Pain without Cough</option>
-                <option value="Cough with Phlegm">Cough with Phlegm</option>
-                <option value="Diarrhea">Diarrhea</option>
-                <option value="Dry Cough">Dry Cough</option>
-                <option value="Ear Pains">Ear Pains</option>
-                <option value="Eye Pains">Eye Pains</option>
-                <option value="Fever">Fever</option>
-                <option value="Headache">Headache</option>
-                <option value="Headache (Migraine)">Headache (Migraine)</option>
-                <option value="High Heart Beating (Palpitation)">High Heart Beating (Palpitation)</option>
-                <option value="Injection of prescribed medicine">Injection of prescribed medicine</option>
-                <option value="Leg Pain">Leg Pain</option>
-                <option value="Nose Bleeding (Epistaxis)">Nose Bleeding (Epistaxis)</option>
-                <option value="Pregnancy">Pregnancy</option>
-                <option value="Prescription of Long-Term Medicine">Prescription of Long-Term Medicine</option>
-                <option value="Runny Nose">Runny Nose</option>
-                <option value="Sore Throat">Sore Throat</option>
-                <option value="Stomach Pain (Abdominal Pain)">Stomach Pain (Abdominal Pain)</option>
-                <option value="Throwing Up (Vomiting)">Throwing Up (Vomiting)</option>
-                <option value="Wrist Pain">Wrist Pain</option>
-                <option value="Cannot Breathe (Shortness of Breath)">Cannot Breathe (Shortness of Breath)</option>
-            </select>
+           <!-- Chief Complaints -->
+<label for="chief-complaint">Chief Complaint</label>
+<select id="chief-complaint" name="chiefComplaint">
+    <option value="">Select an option</option>
 
-            <!-- Pregnancy Details -->
-            <div id="pregnancy-details" class="hidden">
-                <label for="doctor-name">Doctor's Name (if following up):</label>
-                <input type="text" id="doctor-name" name="doctorName" placeholder="Enter doctor's name">
-                <label for="weeks-pregnant">Number of Weeks Pregnant:</label>
-                <input type="number" id="weeks-pregnant" name="weeksPregnant" min="0" placeholder="Enter weeks">
-            </div>
+    <!-- Cardiac and Respiratory Complaints -->
+    <optgroup label="Cardiac and Respiratory Complaints">
+        <option value="chest pain">Chest Pain</option>
+        <option value="shortness of breath">Shortness of Breath</option>
+        <option value="palpitations">Palpitations</option>
+        <option value="dizziness">Dizziness</option>
+        <option value="cough">Cough</option>
+        <option value="wheezing">Wheezing</option>
+        <option value="difficulty breathing">Difficulty Breathing</option>
+    </optgroup>
+
+    <!-- General and Infectious Symptoms -->
+    <optgroup label="General and Infectious Symptoms">
+        <option value="fever">Fever</option>
+        <option value="sore throat">Sore Throat</option>
+        <option value="runny nose">Runny Nose</option>
+        <option value="flu-like symptoms">Flu-Like Symptoms</option>
+        <option value="persistent cough">Persistent Cough</option>
+        <option value="body aches">Body Aches</option>
+        <option value="rash">Rash</option>
+        <option value="fatigue">Fatigue</option>
+        <option value="chills">Chills</option>
+    </optgroup>
+
+    <!-- Gastrointestinal Complaints -->
+    <optgroup label="Gastrointestinal Complaints">
+        <option value="abdominal pain">Abdominal Pain</option>
+        <option value="nausea and vomiting">Nausea and Vomiting</option>
+        <option value="diarrhea">Diarrhea</option>
+        <option value="constipation">Constipation</option>
+        <option value="heartburn">Heartburn</option>
+        <option value="blood in stool">Blood in Stool</option>
+        <option value="loss of appetite">Loss of Appetite</option>
+    </optgroup>
+
+    <!-- Neurological Complaints -->
+    <optgroup label="Neurological Complaints">
+        <option value="severe headache">Severe Headache</option>
+        <option value="migraine">Migraine</option>
+        <option value="weakness in limbs">Weakness in Limbs</option>
+        <option value="confusion">Confusion</option>
+        <option value="altered mental status">Altered Mental Status</option>
+        <option value="seizures">Seizures</option>
+        <option value="loss of consciousness">Loss of Consciousness</option>
+    </optgroup>
+
+    <!-- Trauma and Injuries -->
+    <optgroup label="Trauma and Injuries">
+        <option value="penetrating trauma">Penetrating Trauma</option>
+        <option value="laceration">Laceration</option>
+        <option value="fracture">Fracture</option>
+        <option value="sprain">Sprain</option>
+        <option value="motor vehicle accident injuries">Motor Vehicle Accident Injuries</option>
+        <option value="fall injuries">Fall Injuries</option>
+        <option value="burns">Burns</option>
+    </optgroup>
+
+    <!-- Musculoskeletal Complaints -->
+    <optgroup label="Musculoskeletal Complaints">
+        <option value="back pain">Back Pain</option>
+        <option value="joint pain">Joint Pain</option>
+        <option value="neck pain">Neck Pain</option>
+        <option value="shoulder pain">Shoulder Pain</option>
+        <option value="knee pain">Knee Pain</option>
+        <option value="swelling in limbs">Swelling in Limbs</option>
+    </optgroup>
+
+    <!-- Pregnancy-Related Complaints -->
+    <optgroup label="Pregnancy-Related Complaints">
+        <option value="heavy vaginal bleeding during pregnancy">Heavy Vaginal Bleeding During Pregnancy</option>
+        <option value="mild vaginal bleeding during pregnancy">Mild Vaginal Bleeding During Pregnancy</option>
+        <option value="decreased fetal movement">Decreased Fetal Movement</option>
+        <option value="pregnancy test request">Pregnancy Test Request</option>
+        <option value="prenatal care visit">Prenatal Care Visit</option>
+    </optgroup>
+
+    <!-- Pediatric Complaints -->
+    <optgroup label="Pediatric Complaints">
+        <option value="fever in a child">Fever in a Child</option>
+        <option value="rash in a child">Rash in a Child</option>
+        <option value="vomiting in a child">Vomiting in a Child</option>
+        <option value="diarrhea in a child">Diarrhea in a Child</option>
+    </optgroup>
+
+    <!-- Chronic Conditions and Follow-Ups -->
+    <optgroup label="Chronic Conditions and Follow-Ups">
+        <option value="diabetes follow-up">Diabetes Follow-Up</option>
+        <option value="hypertension follow-up">Hypertension Follow-Up</option>
+        <option value="high blood sugar levels">High Blood Sugar Levels</option>
+        <option value="low blood sugar levels">Low Blood Sugar Levels</option>
+        <option value="needs prescription refill">Needs Prescription Refill</option>
+        <option value="iron supplement refill">Iron Supplement Refill</option>
+        <option value="ferinject injection request">Ferinject Injection Request</option>
+    </optgroup>
+
+    <!-- Environmental Complaints -->
+    <optgroup label="Environmental Complaints">
+        <option value="heat exhaustion">Heat Exhaustion</option>
+        <option value="dehydration">Dehydration</option>
+        <option value="heat stroke">Heat Stroke</option>
+        <option value="dust allergy symptoms">Dust Allergy Symptoms</option>
+        <option value="sandstorm-related symptoms">Sandstorm-Related Symptoms</option>
+        <option value="exposure to extreme heat">Exposure to Extreme Heat</option>
+    </optgroup>
+
+    <!-- Allergic Reactions -->
+    <optgroup label="Allergic Reactions">
+        <option value="food allergy reaction">Food Allergy Reaction</option>
+        <option value="insect bite reaction">Insect Bite Reaction</option>
+        <option value="drug allergy reaction">Drug Allergy Reaction</option>
+    </optgroup>
+
+    <!-- Urinary Complaints -->
+    <optgroup label="Urinary Complaints">
+        <option value="painful urination">Painful Urination</option>
+        <option value="blood in urine">Blood in Urine</option>
+        <option value="frequent urination">Frequent Urination</option>
+        <option value="urinary tract infection symptoms">Urinary Tract Infection Symptoms</option>
+    </optgroup>
+
+    <!-- Ear, Nose, and Eye Complaints -->
+    <optgroup label="Ear, Nose, and Eye Complaints">
+        <option value="ear pain">Ear Pain</option>
+        <option value="hearing loss">Hearing Loss</option>
+        <option value="nosebleed">Nosebleed</option>
+        <option value="eye pain">Eye Pain</option>
+        <option value="vision changes">Vision Changes</option>
+        <option value="red eyes">Red Eyes</option>
+        <option value="foreign body in eye">Foreign Body in Eye</option>
+    </optgroup>
+
+    <!-- Requests and Non-Urgent Needs -->
+    <optgroup label="Requests and Non-Urgent Needs">
+        <option value="requesting sick leave">Requesting Sick Leave</option>
+        <option value="vaccination request">Vaccination Request</option>
+        <option value="medical fitness test">Medical Fitness Test</option>
+        <option value="general health checkup">General Health Checkup</option>
+    </optgroup>
+
+    <!-- Other Complaints -->
+    <optgroup label="Other Complaints">
+        <option value="swollen lymph nodes">Swollen Lymph Nodes</option>
+        <option value="jaundice">Jaundice</option>
+        <option value="metallic taste">Metallic Taste</option>
+        <option value="persistent hiccups">Persistent Hiccups</option>
+        <option value="choking episode">Choking Episode</option>
+        <option value="rectal pain">Rectal Pain</option>
+        <option value="vaginal discharge">Vaginal Discharge</option>
+    </optgroup>
+</select>
+
+           <!-- Pregnancy Details -->
+<div id="pregnancy-details" class="hidden">
+    <label for="doctor-name">Doctor's Name (if following up):</label>
+    <input type="text" id="doctor-name" name="doctorName" placeholder="Enter doctor's name">
+    <label for="weeks-pregnant">Number of Weeks Pregnant:</label>
+    <input type="number" id="weeks-pregnant" name="weeksPregnant" min="0" placeholder="Enter weeks">
+</div>
 
             <button type="button" onclick="addComplaint()">Add Complaint</button>
             <label for="complaint-list">Complaints List</label>
@@ -397,24 +523,48 @@ textarea {
 </div>
 
     <script>
-document.getElementById('chief-complaint').addEventListener('change', function () {
-            const pregnancyDetails = document.getElementById('pregnancy-details');
-            if (this.value === 'Pregnancy') {
-                pregnancyDetails.classList.remove('hidden');
+ document.addEventListener("DOMContentLoaded", function () {
+        const chiefComplaintSelect = document.getElementById("chief-complaint");
+        const pregnancyDetailsDiv = document.getElementById("pregnancy-details");
+        const doctorNameInput = document.getElementById("doctor-name");
+        const weeksPregnantInput = document.getElementById("weeks-pregnant");
+        const complaintDetailsText = document.getElementById("selected-complaint-text");
+
+        // Pregnancy-related complaint values
+        const pregnancyRelatedComplaints = [
+            "heavy vaginal bleeding during pregnancy",
+            "mild vaginal bleeding during pregnancy",
+            "decreased fetal movement",
+            "pregnancy test request",
+            "prenatal care visit"
+        ];
+
+        function updateComplaintDetails() {
+            const selectedComplaint = chiefComplaintSelect.options[chiefComplaintSelect.selectedIndex].text;
+            const doctorName = doctorNameInput.value || "N/A";
+            const weeksPregnant = weeksPregnantInput.value || "N/A";
+
+            // Update the complaint details display
+            complaintDetailsText.textContent = `Complaint: ${selectedComplaint}, Doctor's Name: ${doctorName}, Weeks Pregnant: ${weeksPregnant}`;
+        }
+
+        // Show or hide the pregnancy details section
+        chiefComplaintSelect.addEventListener("change", function () {
+            const selectedValue = chiefComplaintSelect.value;
+
+            if (pregnancyRelatedComplaints.includes(selectedValue)) {
+                pregnancyDetailsDiv.classList.remove("hidden");
             } else {
-                pregnancyDetails.classList.add('hidden');
-                document.getElementById('doctor-name').value = '';
-                document.getElementById('weeks-pregnant').value = '';
+                pregnancyDetailsDiv.classList.add("hidden");
+                // Reset details if not a pregnancy-related complaint
+                complaintDetailsText.textContent = "No details added yet.";
             }
         });
-        function toggleExplanation(group, explanationId) {
-            const explanationBox = document.getElementById(explanationId);
-            const isYesSelected = document.querySelector(`input[name="${group}"]:checked`)?.value === 'Yes';
-            explanationBox.classList.toggle('hidden', !isYesSelected);
-            if (!isYesSelected) {
-                explanationBox.value = '';
-            }
-        }
+
+        // Update the displayed details when pregnancy inputs change
+        doctorNameInput.addEventListener("input", updateComplaintDetails);
+        weeksPregnantInput.addEventListener("input", updateComplaintDetails);
+    });
 
 function addComplaint() {
     const complaintInput = document.getElementById('chief-complaint');
@@ -429,7 +579,7 @@ function addComplaint() {
     const existingComplaints = Array.from(complaintList.children);
 
     // Check for duplicates
-    if (existingComplaints.some(item => item.querySelector('.complaint-text').textContent === selectedComplaint)) {
+    if (existingComplaints.some(item => item.querySelector('.complaint-text').textContent.startsWith(selectedComplaint))) {
         alert("This complaint is already in the list.");
         return;
     }
@@ -437,8 +587,17 @@ function addComplaint() {
     // Prepare the complaint text
     let complaintText = selectedComplaint;
 
-    // Append additional details for "Pregnancy"
-    if (selectedComplaint === "Pregnancy") {
+    // Pregnancy-related complaints
+    const pregnancyRelatedComplaints = [
+        "heavy vaginal bleeding during pregnancy",
+        "mild vaginal bleeding during pregnancy",
+        "decreased fetal movement",
+        "pregnancy test request",
+        "prenatal care visit"
+    ];
+
+    // Append additional details if pregnancy-related
+    if (pregnancyRelatedComplaints.includes(selectedComplaint)) {
         const doctorName = document.getElementById('doctor-name').value.trim();
         const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
         if (weeksPregnant) {
@@ -481,7 +640,6 @@ function addComplaint() {
     // Reset the input field
     complaintInput.value = '';
 }
-
 function removeLastComplaint() {
     const complaintList = document.getElementById('complaint-list');
     if (!complaintList.hasChildNodes()) {
