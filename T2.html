@@ -755,7 +755,7 @@ function handleSubmit(event) {
             submitButton.disabled = false;
         });
 }
-
+function toggleExplanation(group, explanationId) { const explanationBox = document.getElementById(eشxplanationId); const isYesSelected = document.querySelector(`input[name="${group}"]:checked`)?.value === 'Yes'; explanationBox.classList.toggle('hidden', !isYesSelected); if (!isYesSelected) { explanationBox.value = ''; } }
 </script>
 </body>
 </html>
