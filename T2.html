@@ -521,6 +521,11 @@ textarea {
         </span>
     </p>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+<div id="barcode-container" style="text-align: center; display: none; margin-top: 20px;">
+    <svg id="barcode"></svg>
+    <p>Please present the barcode at the triage when called in</p>
+</div>
 
     <script>
  document.addEventListener("DOMContentLoaded", function () {
@@ -656,32 +661,28 @@ function generateUniqueCode() {
 }
 
 function handleSubmit(event) {
-    event.preventDefault(); // Prevent form default submission
+    event.preventDefault();
 
-    // Target elements
     const spinner = document.getElementById('loading-spinner');
     const loadingContainer = document.getElementById('loading-container');
     const loadingMessage = document.getElementById('loading-message');
     const submitButton = document.querySelector('button[type="submit"]');
     const form = document.getElementById('triage-form');
 
-    // Show spinner and loading message
-    loadingContainer.style.display = 'flex'; // Ensure container becomes visible
+    loadingContainer.style.display = 'flex';
     spinner.style.display = 'block';
     loadingMessage.style.display = 'block';
-    submitButton.disabled = true; // Disable the submit button to prevent multiple submissions
+    submitButton.disabled = true;
 
     const uniqueCode = generateUniqueCode();
 
-    // Extract complaints from the list
     const complaintItems = Array.from(document.getElementById('complaint-list').children);
     const complaints = complaintItems.map(item => item.querySelector('.complaint-text').textContent);
 
-    // Create form data object
     const formData = {
         name: document.getElementById('name').value.trim(),
         dob: document.getElementById('dob').value,
-        complaints: complaints,
+        complaints,
         complaintNotes: document.getElementById('complaint-notes').value.trim(),
         painScore: document.getElementById('pain-score').value,
         allergies: document.querySelector('input[name="allergies"]:checked')?.value || 'No',
@@ -700,40 +701,41 @@ function handleSubmit(event) {
 
     console.log("Submitting data:", formData);
 
-    // Submit form data to the API
     fetch('https://patientlist.onrender.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
     })
-        .then((response) => {
-            if (response.ok) {
-                console.log("Response received:", response);
-                return response.json();
-            }
+        .then(response => {
+            if (response.ok) return response.json();
             throw new Error(`Failed to submit the form. Status: ${response.status}`);
         })
-        .then((data) => {
+        .then(data => {
             console.log("Server response:", data);
 
-            // Show success message and unique code
-            const uniqueCodeElement = document.getElementById('unique-code');
-            uniqueCodeElement.textContent = uniqueCode;
+            document.getElementById('unique-code').textContent = uniqueCode;
 
-            form.style.display = 'none'; // Hide the form
-            document.getElementById('submission-message').style.display = 'block'; // Show success message
+            form.style.display = 'none';
+            document.getElementById('submission-message').style.display = 'block';
 
-            // Reset the form and complaint list
-            form.reset();
             document.getElementById('complaint-list').innerHTML = '';
+            form.reset();
+
+            // Generate the barcode
+            JsBarcode("#barcode", uniqueCode, {
+                format: "CODE128",
+                displayValue: true,
+                height: 50,
+            });
+
+            // Show the barcode container
+            document.getElementById('barcode-container').style.display = 'block';
         })
-        .catch((error) => {
+        .catch(error => {
             console.error('Error submitting the form:', error);
             alert('An error occurred while submitting the form. Please try again later.');
         })
         .finally(() => {
-            // Hide spinner, message, and re-enable submit button
-            console.log("Hiding spinner and enabling submit button");
             loadingContainer.style.display = 'none';
             spinner.style.display = 'none';
             loadingMessage.style.display = 'none';
