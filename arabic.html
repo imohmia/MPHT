@@ -541,13 +541,21 @@
     </div>
 </form>
 
-<div id="submission-message" style="display: none; margin-top: 20px; text-align: center; background-color: lightgreen; padding: 20px; border-radius: 10px;">
-    <h2 style="color: darkgreen;">تم الإرسال بنجاح</h2>
-    <p>رمز الإرسال الخاص بك هو: 
-        <span id="unique-code" style="background-color: white; color: black; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
+<div id="submission-message" style="display: none; margin-top: 20px; text-align: center; background-color: #dfffd6; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); direction: rtl; font-family: 'Arial', sans-serif;">
+    <h2 style="color: #2e7d32; font-size: 28px; font-weight: bold;">تم الإرسال بنجاح</h2>
+    <p style="font-size: 18px; color: #2c3e50; margin-top: 10px;">
+        رمز الإرسال الخاص بك هو: 
+        <span id="unique-code" style="background-color: #ffffff; color: #000; padding: 8px 15px; border-radius: 8px; font-weight: bold; font-size: 20px; display: inline-block;">
         </span>
     </p>
+    <div id="qr-code-container" style="text-align: center; margin-top: 20px;">
+        <canvas id="qr-code"></canvas>
+        <p style="margin-top: 15px; font-size: 16px; font-weight: bold; color: #34495e;">
+            يرجى تقديم رمز الاستجابة السريعة عند استدعائك في قسم الفرز.
+        </p>
+    </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
   <script>
     // Show or hide pregnancy details based on the selected complaint
@@ -685,11 +693,11 @@ function handleSubmit(event) {
     const form = document.getElementById('triage-form');
 
     // عرض التحميل والرسالة
-    loadingContainer.style.display = 'flex'; // ضمان ظهور الحاوية
+    loadingContainer.style.display = 'flex'; // ضمان ظهور حاوية التحميل
     spinner.style.display = 'block';
     loadingMessage.style.display = 'block';
-    loadingMessage.textContent = "يرجى الانتظار، يتم إرسال البيانات..."; // الرسالة بالعربية
-    submitButton.disabled = true; // تعطيل زر الإرسال لمنع الإرسال المتكرر
+    loadingMessage.textContent = "يرجى الانتظار... يتم إرسال البيانات"; // الرسالة بالعربية
+    submitButton.disabled = true; // تعطيل زر الإرسال مؤقتًا
 
     const uniqueCode = generateUniqueCode();
 
@@ -726,42 +734,54 @@ function handleSubmit(event) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
     })
-        .then((response) => {
+        .then(response => {
             if (response.ok) {
-                console.log("تم استقبال الرد:", response);
                 return response.json();
             }
             throw new Error(`فشل إرسال النموذج. الحالة: ${response.status}`);
         })
-        .then((data) => {
+        .then(data => {
             console.log("استجابة الخادم:", data);
 
-            // عرض رسالة النجاح والكود الفريد
-            const uniqueCodeElement = document.getElementById('unique-code');
-            uniqueCodeElement.textContent = uniqueCode;
+            // تحديث الكود الفريد
+            document.getElementById('unique-code').textContent = uniqueCode;
 
-            form.style.display = 'none'; // إخفاء النموذج
+            // إخفاء النموذج
+            form.style.display = 'none';
+
+            // عرض رسالة النجاح
             const submissionMessage = document.getElementById('submission-message');
-            submissionMessage.style.display = 'block'; // عرض رسالة النجاح
-            submissionMessage.textContent = `تم إرسال البيانات بنجاح. كود التتبع الخاص بك هو: ${uniqueCode}`; // رسالة النجاح بالعربية
+            submissionMessage.style.display = 'block';
+
+            // عرض رمز QR
+            const qrCodeCanvas = document.getElementById('qr-code');
+            QRCode.toCanvas(qrCodeCanvas, uniqueCode, {
+                width: 200,
+            }, error => {
+                if (error) {
+                    console.error("فشل إنشاء رمز الاستجابة السريعة:", error);
+                } else {
+                    console.log("تم إنشاء رمز الاستجابة السريعة بنجاح.");
+                }
+            });
 
             // إعادة تعيين النموذج وقائمة الشكاوى
             form.reset();
             document.getElementById('complaint-list').innerHTML = '';
         })
-        .catch((error) => {
-            console.error('خطأ أثناء إرسال النموذج:', error);
+        .catch(error => {
+            console.error('حدث خطأ أثناء إرسال النموذج:', error);
             alert('حدث خطأ أثناء إرسال النموذج. يرجى المحاولة مرة أخرى لاحقًا.');
         })
         .finally(() => {
-            // إخفاء التحميل، الرسالة، وإعادة تمكين زر الإرسال
-            console.log("إخفاء التحميل وتمكين زر الإرسال");
+            // إخفاء التحميل وتمكين زر الإرسال
             loadingContainer.style.display = 'none';
             spinner.style.display = 'none';
             loadingMessage.style.display = 'none';
             submitButton.disabled = false;
         });
 }
+
     </script>
 </body>
 </html>
