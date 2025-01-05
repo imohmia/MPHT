@@ -408,6 +408,7 @@ textarea {
         <option value="vaccination request">Vaccination Request</option>
         <option value="medical fitness test">Medical Fitness Test</option>
         <option value="general health checkup">General Health Checkup</option>
+        <option value="change of dressing">change of dressing</option>
     </optgroup>
 
     <!-- Other Complaints -->
@@ -430,7 +431,7 @@ textarea {
     <input type="number" id="weeks-pregnant" name="weeksPregnant" min="0" placeholder="Enter weeks">
 </div>
 
-            <button type="button" onclick="addComplaint()">Add Complaint</button>
+           
             <label for="complaint-list">Complaints List</label>
 <div id="complaint-list-container" style="border: 1px solid #dcdcdc; border-radius: 5px; padding: 10px; max-height: 150px; overflow-y: auto;">
     <ul id="complaint-list" style="list-style: none; margin: 0; padding: 0;">
@@ -533,70 +534,13 @@ textarea {
 
     <script>
  document.addEventListener("DOMContentLoaded", function () {
-        const chiefComplaintSelect = document.getElementById("chief-complaint");
-        const pregnancyDetailsDiv = document.getElementById("pregnancy-details");
-        const doctorNameInput = document.getElementById("doctor-name");
-        const weeksPregnantInput = document.getElementById("weeks-pregnant");
-        const complaintDetailsText = document.getElementById("selected-complaint-text");
+    const chiefComplaintSelect = document.getElementById("chief-complaint");
+    const complaintList = document.getElementById("complaint-list");
+    const pregnancyDetailsDiv = document.getElementById("pregnancy-details");
+    const doctorNameInput = document.getElementById("doctor-name");
+    const weeksPregnantInput = document.getElementById("weeks-pregnant");
 
-        // Pregnancy-related complaint values
-        const pregnancyRelatedComplaints = [
-            "heavy vaginal bleeding during pregnancy",
-            "mild vaginal bleeding during pregnancy",
-            "decreased fetal movement",
-            "pregnancy test request",
-            "prenatal care visit"
-        ];
-
-        function updateComplaintDetails() {
-            const selectedComplaint = chiefComplaintSelect.options[chiefComplaintSelect.selectedIndex].text;
-            const doctorName = doctorNameInput.value || "N/A";
-            const weeksPregnant = weeksPregnantInput.value || "N/A";
-
-            // Update the complaint details display
-            complaintDetailsText.textContent = `Complaint: ${selectedComplaint}, Doctor's Name: ${doctorName}, Weeks Pregnant: ${weeksPregnant}`;
-        }
-
-        // Show or hide the pregnancy details section
-        chiefComplaintSelect.addEventListener("change", function () {
-            const selectedValue = chiefComplaintSelect.value;
-
-            if (pregnancyRelatedComplaints.includes(selectedValue)) {
-                pregnancyDetailsDiv.classList.remove("hidden");
-            } else {
-                pregnancyDetailsDiv.classList.add("hidden");
-                // Reset details if not a pregnancy-related complaint
-                complaintDetailsText.textContent = "No details added yet.";
-            }
-        });
-
-        // Update the displayed details when pregnancy inputs change
-        doctorNameInput.addEventListener("input", updateComplaintDetails);
-        weeksPregnantInput.addEventListener("input", updateComplaintDetails);
-    });
-
-function addComplaint() {
-    const complaintInput = document.getElementById('chief-complaint');
-    const selectedComplaint = complaintInput.value;
-
-    if (!selectedComplaint) {
-        alert("Please select a complaint to add.");
-        return;
-    }
-
-    const complaintList = document.getElementById('complaint-list');
-    const existingComplaints = Array.from(complaintList.children);
-
-    // Check for duplicates
-    if (existingComplaints.some(item => item.querySelector('.complaint-text').textContent.startsWith(selectedComplaint))) {
-        alert("This complaint is already in the list.");
-        return;
-    }
-
-    // Prepare the complaint text
-    let complaintText = selectedComplaint;
-
-    // Pregnancy-related complaints
+    // Pregnancy-related complaint values
     const pregnancyRelatedComplaints = [
         "heavy vaginal bleeding during pregnancy",
         "mild vaginal bleeding during pregnancy",
@@ -605,60 +549,79 @@ function addComplaint() {
         "prenatal care visit"
     ];
 
-    // Append additional details if pregnancy-related
-    if (pregnancyRelatedComplaints.includes(selectedComplaint)) {
-        const doctorName = document.getElementById('doctor-name').value.trim();
-        const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
-        if (weeksPregnant) {
-            complaintText += `, ${weeksPregnant} weeks`;
+    // Automatically add selected complaint to the list
+    chiefComplaintSelect.addEventListener("change", function () {
+        const selectedComplaint = chiefComplaintSelect.value;
+
+        if (!selectedComplaint) return;
+
+        // Check for duplicates
+        const existingComplaints = Array.from(complaintList.children);
+        if (existingComplaints.some(item => item.querySelector('.complaint-text').textContent.startsWith(selectedComplaint))) {
+            alert("This complaint is already in the list.");
+            return;
         }
-        if (doctorName) {
-            complaintText += `, Dr. ${doctorName}`;
+
+        // Prepare the complaint text
+        let complaintText = selectedComplaint;
+
+        // Append additional details if pregnancy-related
+        if (pregnancyRelatedComplaints.includes(selectedComplaint)) {
+            const doctorName = doctorNameInput.value.trim();
+            const weeksPregnant = weeksPregnantInput.value.trim();
+            if (weeksPregnant) {
+                complaintText += `, ${weeksPregnant} weeks`;
+            }
+            if (doctorName) {
+                complaintText += `, Dr. ${doctorName}`;
+            }
+
+            // Reset the pregnancy details inputs
+            doctorNameInput.value = '';
+            weeksPregnantInput.value = '';
+            pregnancyDetailsDiv.classList.add('hidden');
         }
 
-        // Reset the pregnancy details inputs
-        document.getElementById('doctor-name').value = '';
-        document.getElementById('weeks-pregnant').value = '';
-        document.getElementById('pregnancy-details').classList.add('hidden');
-    }
+        // Create a new complaint item
+        const newComplaint = document.createElement('li');
+        newComplaint.className = 'complaint-item';
 
-    // Create a new complaint item
-    const newComplaint = document.createElement('li');
-    newComplaint.className = 'complaint-item';
+        // Add complaint text
+        const complaintTextNode = document.createElement('span');
+        complaintTextNode.className = 'complaint-text';
+        complaintTextNode.textContent = complaintText;
 
-    // Add complaint text
-    const complaintTextNode = document.createElement('span');
-    complaintTextNode.className = 'complaint-text';
-    complaintTextNode.textContent = complaintText;
+        // Add remove button
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.className = 'remove-button';
+        removeButton.onclick = () => {
+            complaintList.removeChild(newComplaint);
+        };
 
-    // Add remove button
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remove';
-    removeButton.className = 'remove-button';
-    removeButton.onclick = () => {
-        complaintList.removeChild(newComplaint);
-    };
+        // Append the text and button to the new complaint item
+        newComplaint.appendChild(complaintTextNode);
+        newComplaint.appendChild(removeButton);
 
-    // Append the text and button to the new complaint item
-    newComplaint.appendChild(complaintTextNode);
-    newComplaint.appendChild(removeButton);
+        // Add the new complaint to the list
+        complaintList.appendChild(newComplaint);
 
-    // Add the new complaint to the list
-    complaintList.appendChild(newComplaint);
+        // Reset the input field
+        chiefComplaintSelect.value = '';
+    });
 
-    // Reset the input field
-    complaintInput.value = '';
-}
-function removeLastComplaint() {
-    const complaintList = document.getElementById('complaint-list');
-    if (!complaintList.hasChildNodes()) {
-        alert("No complaints to remove.");
-        return;
-    }
+    // Show or hide the pregnancy details section
+    chiefComplaintSelect.addEventListener("change", function () {
+        const selectedValue = chiefComplaintSelect.value;
 
-    // Remove the last complaint in the list
-    complaintList.lastChild.remove();
-}
+        if (pregnancyRelatedComplaints.includes(selectedValue)) {
+            pregnancyDetailsDiv.classList.remove("hidden");
+        } else {
+            pregnancyDetailsDiv.classList.add("hidden");
+        }
+    });
+});
+
 function generateUniqueCode() {
     const randomPart = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit random number
     return `MPHT-${randomPart}`;
