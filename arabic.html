@@ -427,7 +427,6 @@
     <input type="number" id="weeks-pregnant" name="weeksPregnant" min="0" placeholder="أدخل عدد الأسابيع">
 </div>
 
-   <button type="button" onclick="addComplaint()">إضافة شكوى</button>
    <label for="complaint-list">قائمة الشكاوى</label>
 <div id="complaint-list-container" style="border: 1px solid #dcdcdc; border-radius: 5px; padding: 10px; max-height: 150px; overflow-y: auto;">
                 <ul id="complaint-list" style="list-style: none; margin: 0; padding: 0;"></ul>
@@ -558,113 +557,117 @@
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
   <script>
-    // Show or hide pregnancy details based on the selected complaint
-    document.getElementById('chief-complaint').addEventListener('change', function () {
-        const pregnancyDetails = document.getElementById('pregnancy-details');
-        const pregnancyRelatedComplaints = [
-            "نزيف مهبلي شديد أثناء الحمل",
-            "نزيف مهبلي خفيف أثناء الحمل",
-            "قلة حركة الجنين",
-            "طلب اختبار حمل",
-            "زيارة متابعة الحمل"
-        ];
+// Show or hide pregnancy details based on the selected complaint
+document.getElementById('chief-complaint').addEventListener('change', function () {
+    const pregnancyDetails = document.getElementById('pregnancy-details');
+    const selectedComplaint = this.value;
+    const pregnancyRelatedComplaints = [
+        "نزيف مهبلي شديد أثناء الحمل",
+        "نزيف مهبلي خفيف أثناء الحمل",
+        "قلة حركة الجنين",
+        "طلب اختبار حمل",
+        "زيارة متابعة الحمل"
+    ];
 
-        if (pregnancyRelatedComplaints.includes(this.value)) {
-            pregnancyDetails.classList.remove('hidden');
-        } else {
-            pregnancyDetails.classList.add('hidden');
-            document.getElementById('doctor-name').value = '';
-            document.getElementById('weeks-pregnant').value = '';
-        }
-    });
-
-    // Toggle explanation textarea visibility for Yes/No questions
-    function toggleExplanation(group, explanationId) {
-        const explanationBox = document.getElementById(explanationId);
-        const isYesSelected = document.querySelector(`input[name="${group}"]:checked`)?.value === 'Yes';
-        explanationBox.classList.toggle('hidden', !isYesSelected);
-        if (!isYesSelected) {
-            explanationBox.value = ''; // Clear the explanation box if 'No' is selected
-        }
+    if (pregnancyRelatedComplaints.includes(selectedComplaint)) {
+        pregnancyDetails.classList.remove('hidden');
+    } else {
+        pregnancyDetails.classList.add('hidden');
+        document.getElementById('doctor-name').value = '';
+        document.getElementById('weeks-pregnant').value = '';
     }
 
-    // Add a complaint to the list
-    function addComplaint() {
-        const complaintInput = document.getElementById('chief-complaint');
-        const selectedComplaint = complaintInput.value;
+    // Automatically add complaint to the list
+    addComplaint(selectedComplaint);
+});
 
-        if (!selectedComplaint) {
-            alert("الرجاء اختيار شكوى لإضافتها.");
-            return;
-        }
-
-        const complaintList = document.getElementById('complaint-list');
-        const existingComplaints = Array.from(complaintList.children);
-
-        // Check for duplicates
-        if (existingComplaints.some(item => item.querySelector('.complaint-text')?.textContent.startsWith(selectedComplaint))) {
-            alert("هذه الشكوى موجودة بالفعل في القائمة.");
-            return;
-        }
-
-        let complaintText = selectedComplaint;
-
-        // Append additional details for pregnancy-related complaints
-        const pregnancyRelatedComplaints = [
-            "نزيف مهبلي شديد أثناء الحمل",
-            "نزيف مهبلي خفيف أثناء الحمل",
-            "قلة حركة الجنين",
-            "طلب اختبار حمل",
-            "زيارة متابعة الحمل"
-        ];
-
-        if (pregnancyRelatedComplaints.includes(selectedComplaint)) {
-            const doctorName = document.getElementById('doctor-name').value.trim();
-            const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
-
-            if (weeksPregnant) {
-                complaintText += `, ${weeksPregnant} أسابيع`;
-            }
-
-            if (doctorName) {
-                complaintText += `, د. ${doctorName}`;
-            }
-
-            // Reset pregnancy details inputs
-            document.getElementById('doctor-name').value = '';
-            document.getElementById('weeks-pregnant').value = '';
-            document.getElementById('pregnancy-details').classList.add('hidden');
-        }
-
-        // Create a new list item for the complaint
-        const newComplaint = document.createElement('li');
-        newComplaint.className = 'complaint-item';
-
-        // Add complaint text
-        const complaintTextNode = document.createElement('span');
-        complaintTextNode.className = 'complaint-text';
-        complaintTextNode.textContent = complaintText;
-
-        // Add a remove button
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'إزالة';
-        removeButton.className = 'remove-button';
-        removeButton.onclick = () => {
-            complaintList.removeChild(newComplaint);
-        };
-
-        // Append text and button to the list item
-        newComplaint.appendChild(complaintTextNode);
-        newComplaint.appendChild(removeButton);
-
-        // Append the new complaint to the list
-        complaintList.appendChild(newComplaint);
-
-        // Clear the complaint input field
-        complaintInput.value = '';
-
-        console.log("تمت إضافة الشكوى بنجاح!");
+// Toggle explanation textarea visibility for Yes/No questions
+function toggleExplanation(group, explanationId) {
+    const explanationBox = document.getElementById(explanationId);
+    const isYesSelected = document.querySelector(`input[name="${group}"]:checked`)?.value === 'Yes';
+    explanationBox.classList.toggle('hidden', !isYesSelected);
+    if (!isYesSelected) {
+        explanationBox.value = ''; // Clear the explanation box if 'No' is selected
     }
+}
+
+// Add a complaint to the list
+function addComplaint(selectedComplaint) {
+    const complaintInput = document.getElementById('chief-complaint');
+    selectedComplaint = selectedComplaint || complaintInput.value;
+
+    if (!selectedComplaint) {
+        alert("الرجاء اختيار شكوى لإضافتها.");
+        return;
+    }
+
+    const complaintList = document.getElementById('complaint-list');
+    const existingComplaints = Array.from(complaintList.children);
+
+    // Check for duplicates
+    if (existingComplaints.some(item => item.querySelector('.complaint-text')?.textContent.startsWith(selectedComplaint))) {
+        alert("هذه الشكوى موجودة بالفعل في القائمة.");
+        return;
+    }
+
+    let complaintText = selectedComplaint;
+
+    // Append additional details for pregnancy-related complaints
+    const pregnancyRelatedComplaints = [
+        "نزيف مهبلي شديد أثناء الحمل",
+        "نزيف مهبلي خفيف أثناء الحمل",
+        "قلة حركة الجنين",
+        "طلب اختبار حمل",
+        "زيارة متابعة الحمل"
+    ];
+
+    if (pregnancyRelatedComplaints.includes(selectedComplaint)) {
+        const doctorName = document.getElementById('doctor-name').value.trim();
+        const weeksPregnant = document.getElementById('weeks-pregnant').value.trim();
+
+        if (weeksPregnant) {
+            complaintText += `, ${weeksPregnant} أسابيع`;
+        }
+
+        if (doctorName) {
+            complaintText += `, د. ${doctorName}`;
+        }
+
+        // Reset pregnancy details inputs
+        document.getElementById('doctor-name').value = '';
+        document.getElementById('weeks-pregnant').value = '';
+        document.getElementById('pregnancy-details').classList.add('hidden');
+    }
+
+    // Create a new list item for the complaint
+    const newComplaint = document.createElement('li');
+    newComplaint.className = 'complaint-item';
+
+    // Add complaint text
+    const complaintTextNode = document.createElement('span');
+    complaintTextNode.className = 'complaint-text';
+    complaintTextNode.textContent = complaintText;
+
+    // Add a remove button
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'إزالة';
+    removeButton.className = 'remove-button';
+    removeButton.onclick = () => {
+        complaintList.removeChild(newComplaint);
+    };
+
+    // Append text and button to the list item
+    newComplaint.appendChild(complaintTextNode);
+    newComplaint.appendChild(removeButton);
+
+    // Append the new complaint to the list
+    complaintList.appendChild(newComplaint);
+
+    // Clear the complaint input field
+    complaintInput.value = '';
+
+    console.log("تمت إضافة الشكوى بنجاح!");
+}
 
 function removeComplaint() {
     const complaintList = document.getElementById('complaint-list');
