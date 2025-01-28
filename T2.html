@@ -263,8 +263,35 @@ textarea {
             <label for="name">Patient Name</label>
             <input type="text" id="name" name="name" placeholder="Enter patient name" required>
 
-            <label for="dob">Date of Birth</label>
-            <input type="date" id="dob" name="dob" required>
+            <label for="gender">Gender</label>
+<select id="gender" name="gender" onchange="checkGender()">
+    <option value="">Select</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+</select>
+
+<label for="dob">Date of Birth</label>
+<input type="date" id="dob" name="dob" required onchange="checkGender()">
+
+<div id="pregnancyQuestions" class="hidden">
+    <label>Are you pregnant (if applicable)? </label>
+    <input type="radio" id="pregnantYes" name="pregnant" value="yes" onclick="checkPregnancy()"> Yes
+    <input type="radio" id="pregnantNo" name="pregnant" value="no" onclick="checkPregnancy()"> No
+
+    <div id="additionalQuestionsYes" class="hidden">
+        <label for="doctorName">Doctor's Name (optional)</label>
+        <input type="text" id="doctorName" name="doctorName">
+
+        <label for="weeksPregnant">Weeks of Pregnancy</label>
+        <input type="number" id="weeksPregnant" name="weeksPregnant">
+    </div>
+
+    <div id="additionalQuestionsNo" class="hidden">
+        <label for="lmp">Last Menstrual Period (LMP)</label>
+        <input type="date" id="lmp" name="lmp">
+    </div>
+</div>
+    
 
            <!-- Chief Complaints -->
 <label for="chief-complaint">Chief Complaint</label>
@@ -628,6 +655,51 @@ function generateUniqueCode() {
     return `MPHT-${randomPart}`;
 }
 
+function checkGender() {
+    var gender = document.getElementById('gender').value;
+    var dob = document.getElementById('dob').value;
+    if (gender === 'female' && dob) {
+        var age = calculateAge(dob);
+        if (age > 18) {
+            document.getElementById('pregnancyQuestions').classList.remove('hidden');
+        } else {
+            document.getElementById('pregnancyQuestions').classList.add('hidden');
+            document.getElementById('additionalQuestionsYes').classList.add('hidden');
+            document.getElementById('additionalQuestionsNo').classList.add('hidden');
+        }
+    } else {
+        document.getElementById('pregnancyQuestions').classList.add('hidden');
+        document.getElementById('additionalQuestionsYes').classList.add('hidden');
+        document.getElementById('additionalQuestionsNo').classList.add('hidden');
+    }
+}
+
+function calculateAge(dob) {
+    var birthDate = new Date(dob);
+    var today = new Date();
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+function checkPregnancy() {
+    var pregnantYes = document.getElementById('pregnantYes').checked;
+    var pregnantNo = document.getElementById('pregnantNo').checked;
+    if (pregnantYes) {
+        document.getElementById('additionalQuestionsYes').classList.remove('hidden');
+        document.getElementById('additionalQuestionsNo').classList.add('hidden');
+    } else if (pregnantNo) {
+        document.getElementById('additionalQuestionsYes').classList.add('hidden');
+        document.getElementById('additionalQuestionsNo').classList.remove('hidden');
+    } else {
+        document.getElementById('additionalQuestionsYes').classList.add('hidden');
+        document.getElementById('additionalQuestionsNo').classList.add('hidden');
+    }
+}
+
 function handleSubmit(event) {
     event.preventDefault();
 
@@ -650,8 +722,14 @@ function handleSubmit(event) {
     const complaints = complaintItems.map(item => item.querySelector('.complaint-text').textContent);
 
     const formData = {
+        code: uniqueCode,
         name: document.getElementById('name').value.trim(),
         dob: document.getElementById('dob').value,
+        gender: document.getElementById('gender').value,
+        pregnant: document.querySelector('input[name="pregnant"]:checked')?.value || 'no',
+        doctorName: document.getElementById('doctorName').value.trim(),
+        weeksPregnant: document.getElementById('weeksPregnant').value.trim(),
+        lmp: document.getElementById('lmp').value,
         complaints,
         complaintNotes: document.getElementById('complaint-notes').value.trim(),
         painScore: document.getElementById('pain-score').value,
@@ -666,7 +744,6 @@ function handleSubmit(event) {
         travelHistory: document.querySelector('input[name="travelHistory"]:checked')?.value || 'No',
         travelHistoryExplanation: document.getElementById('travel-explanation').value.trim(),
         notes: document.getElementById('notes').value.trim(),
-        code: uniqueCode,
     };
 
     console.log("Submitting data:", formData);
@@ -719,6 +796,7 @@ function handleSubmit(event) {
             submitButton.disabled = false;
         });
 }
+
 function toggleExplanation(group, explanationId) { const explanationBox = document.getElementById(explanationId); const isYesSelected = document.querySelector(`input[name="${group}"]:checked`)?.value === 'Yes'; explanationBox.classList.toggle('hidden', !isYesSelected); if (!isYesSelected) { explanationBox.value = ''; } }
 </script>
 </body>
